@@ -3,6 +3,7 @@ node_modules/
 
 # Ignorar archivos de configuración
 .env
+.gitignore
 
 # Ignorar archivos temporales
 *.log
