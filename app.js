@@ -33,9 +33,6 @@ export class ProductManager {
     }
 
     async addProducts(product) {
-
-        console.log(product)
-
         try {
             const productValues = {
                 title: product.title,
@@ -87,7 +84,6 @@ export class ProductManager {
     async getProductById(id) {
         try {
             this.products = await this.#readFile()
-
             const productId = this.products.find(p => p.id === id)
 
             if (!productId) {
@@ -100,7 +96,6 @@ export class ProductManager {
         } finally {
             this.products = []
         }
-
     }
 
     async updateProduct(id, product) {
@@ -131,12 +126,10 @@ export class ProductManager {
     async deleteProduct(id) {
         try {
             this.products = await this.#readFile()
-
             const product = this.products.some(p => p.id === id)
 
-            if(product) {
+            if (product) {
                 this.products = this.products.filter(p => p.id !== id)
-    
                 await this.#writeFile(this.products)
             } else {
                 throw new Error(`Producto no encontrado`)
@@ -179,10 +172,8 @@ class CartManager {
             this.carts = await this.#readFile()
             this.carts.push({ id: crypto.randomUUID(), products: [] })
             await this.#writeFIle(this.carts)
-
         } catch (error) {
             throw new Error(`Error al crear el carrito: ${error.mensaje}`)
-
         } finally {
             this.carts = []
         }
@@ -198,10 +189,8 @@ class CartManager {
             }
 
             return cart
-
         } catch (error) {
             throw new Error(`Error al obtener el carrito: ${error.message}`)
-
         } finally {
             this.carts = []
         }
@@ -212,8 +201,9 @@ class CartManager {
             this.carts = await this.#readFile()
             const cart = await this.carts.find(c => c.id === cartId)
             const product = await productManager.getProductById(productId)
-
+            
             if (cart && product) {
+                console.log(product)
                 if (!cart.products.some(p => p.product === productId)) {
                     cart.products.push({ product: productId, quantity: 1 })
                 } else {
@@ -226,7 +216,6 @@ class CartManager {
             } else {
                 throw new Error('Carrito o Producto no encontrado')
             }
-
 
         } catch (error) {
             throw new Error(`Error al agregar producto ${error}`)
@@ -244,7 +233,11 @@ const productManager = new ProductManager(pathProducts)
 
 // Endpoints de products
 server.get('/api/products/', async (req, res) => {
-    res.json(await productManager.getProducts())
+    try {
+        res.json(await productManager.getProducts())
+    } catch (error) {
+        res.status(404).json({ error: error.message })
+    }
 })
 
 server.get('/api/products/:pid', async (req, res) => {
@@ -252,7 +245,6 @@ server.get('/api/products/:pid', async (req, res) => {
 
     try {
         res.status(200).json(await productManager.getProductById(pid))
-
     } catch (error) {
         res.status(404).json({ error: error.message })
     }
@@ -275,8 +267,7 @@ server.put('/api/products/:pid', async (req, res) => {
 
     try {
         await productManager.updateProduct(pid, dataToUpdate)
-        res.status(200).send('Actualizado')
-
+        res.status(200).json({ mensaje: 'Actualizado' })
     } catch (error) {
         res.status(404).json({ error: error.message })
     }
@@ -286,17 +277,13 @@ server.delete('/api/products/:pid', async (req, res) => {
     const { pid } = req.params
 
     try {
-
         await productManager.deleteProduct(pid)
-
-        res.json({ mensaje: 'Producto Eliminado' })
-
+        res.status(200).json({ mensaje: 'Producto Eliminado' })
     } catch (error) {
-        res.json({ error: error.message })
+        res.status(404).json({ error: error.message })
 
     }
 })
-
 
 // Ruta del archivo para la persistencia de los datos de los carritos de compras
 const pathcarts = 'carts.json'
@@ -310,9 +297,8 @@ server.post('/api/carts/', async (req, res) => {
     try {
         await cartManager.createCart()
         res.status(201).json({ mensaje: 'Carrito creado con exito' })
-
     } catch (error) {
-        res.status(404).json({ error })
+        res.status(404).json({ error: error.message })
     }
 })
 
