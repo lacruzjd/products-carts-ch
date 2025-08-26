@@ -1,0 +1,44 @@
+[
+  {
+    "id": "6e50826f-a0eb-4575-b3b9-43f5363614b7",
+    "title": "Cafetera automática programable",
+    "description": "Cafetera digital con temporizador, capacidad de 1.5 litros y función de mantener caliente.",
+    "code": "CAF321",
+    "price": 64.5,
+    "status": true,
+    "stock": 45,
+    "category": "Electrodomésticos",
+    "thumbnails": [
+      "./img/cafetera1.jpg",
+      "./img/cafetera2.jpg"
+    ]
+  },
+  {
+    "id": "224898bd-8b13-40dc-922d-dba2642f4187",
+    "title": "Mochila impermeable",
+    "description": "Mochila resistente al agua con múltiples compartimentos y diseño ergonómico.",
+    "code": "MOCH456",
+    "price": 39.99,
+    "status": true,
+    "stock": 75,
+    "category": "Accesorios",
+    "thumbnails": [
+      "./img/mochila1.jpg",
+      "./img/mochila2.jpg"
+    ]
+  },
+  {
+    "id": "6aa576a5-240e-4ca2-912d-78936228e1eb",
+    "title": "Lámpara LED de escritorio",
+    "description": "Lámpara ajustable con luz blanca cálida y fría, ideal para estudio o trabajo nocturno.",
+    "code": "LAMP654",
+    "price": 24.99,
+    "status": true,
+    "stock": 150,
+    "category": "Iluminación",
+    "thumbnails": [
+      "./img/lampara1.jpg",
+      "./img/lampara2.jpg"
+    ]
+  }
+]

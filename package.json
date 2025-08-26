@@ -1,0 +1,16 @@
+{
+  "name": "productscarts",
+  "version": "1.0.0",
+  "description": "productos y carritos de compra",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch app.js"
+  },
+  "author": "Jose David Lacruz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
