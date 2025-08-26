@@ -8,3 +8,6 @@ node_modules/
 # Ignorar archivos temporales
 *.log
 *.tmp
+
+# IDEs
+.vscode/
