@@ -32,6 +32,10 @@ export class ProductManager {
         }
     }
 
+    #generaId() {
+        return crypto.randomUUID()
+    }
+
     async addProducts(product) {
         try {
             const productValues = {
@@ -57,7 +61,7 @@ export class ProductManager {
                 throw new Error(`Codigo de producto duplicado.`)
             }
 
-            const productoToSave = { id: crypto.randomUUID(), ...productValues }
+            const productoToSave = { id: this.#generaId(), ...productValues }
 
             this.products.push(productoToSave)
 
@@ -84,13 +88,12 @@ export class ProductManager {
     async getProductById(id) {
         try {
             this.products = await this.#readFile()
-            const productId = this.products.find(p => p.id === id)
+            const productById = this.products.find(p => p.id === id)
 
-            if (!productId) {
+            if (!productById) {
                 throw new Error(`Not found`)
             }
-
-            return productId
+            return productById
         } catch (error) {
             throw new Error('Producto no encontrado')
         } finally {
@@ -126,9 +129,9 @@ export class ProductManager {
     async deleteProduct(id) {
         try {
             this.products = await this.#readFile()
-            const product = this.products.some(p => p.id === id)
+            const productToDelete = this.products.some(p => p.id === id)
 
-            if (product) {
+            if (productToDelete) {
                 this.products = this.products.filter(p => p.id !== id)
                 await this.#writeFile(this.products)
             } else {
@@ -167,10 +170,14 @@ class CartManager {
         }
     }
 
+    #generaId() {
+        return crypto.randomUUID()
+    }
+
     async createCart() {
         try {
             this.carts = await this.#readFile()
-            this.carts.push({ id: crypto.randomUUID(), products: [] })
+            this.carts.push({ id: this.#generaId(), products: [] })
             await this.#writeFIle(this.carts)
         } catch (error) {
             throw new Error(`Error al crear el carrito: ${error.mensaje}`)
@@ -182,13 +189,13 @@ class CartManager {
     async getCartById(id) {
         try {
             this.carts = await this.#readFile(this.pathCart)
-            const cart = await this.carts.find(c => c.id === id)
+            const cartById = await this.carts.find(c => c.id === id)
 
-            if (!cart) {
+            if (!cartById) {
                 throw new Error('Carrito no encontrado')
             }
 
-            return cart
+            return cartById
         } catch (error) {
             throw new Error(`Error al obtener el carrito: ${error.message}`)
         } finally {
@@ -201,7 +208,7 @@ class CartManager {
             this.carts = await this.#readFile()
             const cart = await this.carts.find(c => c.id === cartId)
             const product = await productManager.getProductById(productId)
-            
+
             if (cart && product) {
                 console.log(product)
                 if (!cart.products.some(p => p.product === productId)) {
