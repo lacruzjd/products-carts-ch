@@ -11,6 +11,8 @@
   "author": "Jose David Lacruz",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.3",
+    "multer": "^2.0.2"
   }
 }

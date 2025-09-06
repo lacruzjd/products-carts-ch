@@ -1,0 +1,123 @@
+/* colors */
+
+*{
+    margin: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #74ebd5, #ACB6E5);
+  min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: aquamarine;
+    height: 80px;
+    padding: 0 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+}
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.products article.oferta {
+    background-color: #fdd4c9;
+}
+.products article{
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.products img {
+    width: 100%;
+}
+
+.products p {
+        font-weight: bold;
+    font-size: 1.4rem;
+    color: crimson;
+}
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* Contenedor del formulario */
+form, .products article {
+    background-color: #fff0f0;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
+}
+
+form {
+    width: 30%;
+}
+
+/* Título */
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Etiquetas y campos */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #74ebd5;
+  outline: none;
+}
+
+/* Botón */
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #74ebd5;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #57c5b6;
+}
+
+/* Mensajes */
+p {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}

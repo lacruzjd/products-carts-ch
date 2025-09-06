@@ -1,0 +1,28 @@
+<h2>Productos</h2>
+<section class="products">
+
+    {{#if products}}
+    {{#each products}}
+    {{#if oferta}}
+    <article class="oferta">
+        <p>Oferta!!!</p>
+        <img src={{thumbnails.[0]}}  onerror="this.src='/products/img/noimage.jpg'" alt={{thumbnails.[0]}}>
+        <h3>{{title}}</h3>
+        <p>{{price}}</p>
+        <button>Add to Cart</button>
+    </article>
+    {{else}}
+    <article>
+        <img src={{thumbnails.[0]}}  onerror="this.src='/products/img/noimage.jpg'" alt={{thumbnails.[0]}}>
+        <h3>{{title}}</h3>
+        <p>{{price}}</p>
+        <button>Add to Cart</button>
+    </article>
+    {{/if}}
+    {{/each}}
+    {{else}}
+    <article>
+    <h2>No hay productos disponibles</h2>
+    </article>
+    {{/if}}
+</section>

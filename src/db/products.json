@@ -4,14 +4,15 @@
     "title": "Cafetera automática programable",
     "description": "Cafetera digital con temporizador, capacidad de 1.5 litros y función de mantener caliente.",
     "code": "CAF321",
-    "price": 64.5,
+    "price": 60,
     "status": true,
     "stock": 45,
     "category": "Electrodomésticos",
     "thumbnails": [
-      "./img/cafetera1.jpg",
-      "./img/cafetera2.jpg"
-    ]
+      "/products/img/cafetera1.jpg",
+      "/products/img/cafetera2.jpg"
+    ],
+    "oferta": true
   },
   {
     "id": "224898bd-8b13-40dc-922d-dba2642f4187",
@@ -23,8 +24,7 @@
     "stock": 75,
     "category": "Accesorios",
     "thumbnails": [
-      "./img/mochila1.jpg",
-      "./img/mochila2.jpg"
+      "/products/img/mochila1.jpg"
     ]
   },
   {
@@ -37,8 +37,22 @@
     "stock": 150,
     "category": "Iluminación",
     "thumbnails": [
-      "./img/lampara1.jpg",
-      "./img/lampara2.jpg"
+      "/products/img/lampara1.jpg",
+      "/products/img/lampara2.jpg"
+    ]
+  },
+  {
+    "id": "6b4e539b-5771-4712-8913-ee30520222e7",
+    "title": "Tostadora de doble slot con ajuste de temperatura",
+    "description": "Tostadora eléctrica con dos ranuras anchas, 7 niveles de tostado y bandeja recogemigas extraíble.",
+    "code": "TST204",
+    "price": 45.99,
+    "status": true,
+    "stock": 30,
+    "category": "Electrodomésticos",
+    "thumbnails": [
+      "/products/img/tostadora1.jpg",
+      "/products/img/tostadora2.jpg"
     ]
   }
 ]
