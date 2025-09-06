@@ -3,7 +3,6 @@ import { engine } from 'express-handlebars';
 import { config } from './src/config/config.js';
 import apiRoutes from './src/routes/api/index.js';
 
-
 const app = express();
 const PORT = 8080;
 
