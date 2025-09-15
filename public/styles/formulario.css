@@ -1,0 +1,54 @@
+#formulario-real-time {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+#formulario-real-time form {
+  margin: var(--espacio-secundario);
+  display: flex;
+  background: var(--color-desaturado-terciario);
+  border-radius: 12px;
+  box-shadow: var(--sombra-secundaria);
+  font-family: 'Segoe UI', sans-serif;
+  flex-wrap: wrap;
+}
+
+#formulario-real-time form label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+form input,
+form textarea,
+form select {
+  padding: 6px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+form label.price,
+form label.stock,
+form label.code {
+  width: 20%;
+}
+
+form label.description,
+form label.title,
+form button {
+  flex-basis: 100%;
+}

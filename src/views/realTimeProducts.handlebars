@@ -1,0 +1,30 @@
+<header>
+        <h1>{{title}}</h1>
+    <nav>
+        <a href="/">Inicio</a>
+    </nav>
+</header>
+<main id="real-time-products">
+    <h2>Productos Argedados:</h2>
+    <section id="render-real-time-products" class="products"></section>
+    <section id="formulario-real-time">
+        <form enctype="multipart/form-data">
+            <label for="title" class="title">Titulo
+                <input type="text" name="title" id="title"></label>
+            <label for="code" class="code">Codigo
+                <input type="text" name="code" id="code"></label> 
+            <label for="code" class="stock">Stock
+                <input type="number" name="stock" id="stock" min="1" ></label>
+            <label for="price" class="price">Precio
+                <input type="number" name="price" id="price" min="1" step="0.01"></label>
+            <label for="category" class="category">Categoria
+                <input type="text" name="category" id="category"></label>
+            <label for="description" class="description">Descripcion
+                <textarea type="" name="description" id="description"></textarea>
+            </label>
+            <label for="fotos">Imagenes
+                <input type="file" name="fotos" id="fotos" multiple></label>
+            <button type="submit">Agregar Producto</button>
+        </form>
+    </section>
+</main>

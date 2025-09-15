@@ -1,6 +1,13 @@
 import CartManager from "../../managers/carts.manager.js"
+import PersistenciaArchivoJson from "../../services/PersistenciaArchivoJson.js"
+import path from 'path'
+import { config } from "../../config/config.js"
 
-const cartManager = new CartManager()
+// Ruta del archivo para la persistencia de los datos de los carritos de compras
+const pathcarts = path.join(config.paths.db, 'carts.json')
+
+const persistencia = new PersistenciaArchivoJson(pathcarts)
+const cartManager = new CartManager(persistencia)
 
 export const getCarts = async (req, res) => {
     try {
@@ -43,12 +50,12 @@ export const addProductToCart = async (req, res) => {
 }
 
 export const deleteCart = async (req, res) => {
-    const {cid} = req.params
+    const { cid } = req.params
 
     try {
         await cartManager.deleteCart(cid)
         res.status(201).json({ mensaje: 'Carrito Eliminado' })
     } catch (error) {
-        res.status(404).json({mensaje: error.message})
+        res.status(404).json({ mensaje: error.message })
     }
 }

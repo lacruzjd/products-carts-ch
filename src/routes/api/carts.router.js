@@ -1,4 +1,4 @@
-import {Router} from 'express'
+import { Router } from 'express'
 import { addProductToCart, createCart, deleteCart, gerCartById, getCarts } from '../../controllers/api/carts.controller.js'
 
 const cartsRouter = Router()

@@ -1,58 +1,30 @@
-import fs from 'fs/promises'
-import { join } from 'path'
-import { config } from '../config/config.js'
 import crypto from 'crypto'
 import Product from '../models/Product.js'
 
-// Ruta para la persiencia de productos
-const pathProducts = join(config.paths.db, 'products.json')
-
 //Clase para gestionar los productos
-class ProductManager {
-    constructor() {
-        this.pathProducts = pathProducts
+export default class ProductManager {
+    constructor(persistencia) {
         this.products = []
-    }
-
-    async #readFile() {
-        try {
-            const data = await fs.readFile(this.pathProducts, 'utf8')
-            return JSON.parse(data)
-        } catch (error) {
-            throw new Error(`Ocurrio un error al leer archivo: ${error}`)
-        }
-    }
-
-    async #writeFile(data) {
-        try {
-            await fs.writeFile(this.pathProducts, JSON.stringify(data, null, 2))
-        } catch (error) {
-            throw new Error(`Ocurrio un error al guardar datos en el archivo: ${error}`)
-        }
-    }
-
-    #generaId() {
-        return crypto.randomUUID()
+        this.persistencia = persistencia
     }
 
     async addProducts(product) {
         try {
-
-            this.products = await this.#readFile()
+            this.products = await this.persistencia.getData()
 
             if (this.products.some(p => p.code === product.code)) {
                 throw new Error(`Codigo de producto duplicado.`)
             }
 
             product.id = crypto.randomUUID()
-            
+
             const newProduct = new Product(product)
 
             this.products.push(newProduct)
 
-            await this.#writeFile(this.products)
+            await this.persistencia.saveData(this.products)
             return newProduct
-            
+
         } catch (error) {
             throw new Error(`Ocurrio un error al guardar el producto. ${error.message}`)
         } finally {
@@ -62,7 +34,7 @@ class ProductManager {
 
     async getProducts() {
         try {
-            this.products = await this.#readFile()
+            this.products = await this.persistencia.getData()
             return this.products
         } catch (error) {
             throw new Error(`Ocurrio un error al obtener lista de productos: ${error.message}`)
@@ -73,7 +45,7 @@ class ProductManager {
 
     async getProductById(id) {
         try {
-            this.products = await this.#readFile()
+            this.products = await this.persistencia.getData()
             const productById = this.products.find(p => p.id === id)
 
             if (!productById) {
@@ -89,7 +61,8 @@ class ProductManager {
 
     async updateProduct(id, product) {
         try {
-            this.products = await this.#readFile()
+            this.products = await this.persistencia.getData()
+
             const productToUpdate = this.products.find(p => p.id === id)
 
             if (productToUpdate) {
@@ -101,9 +74,10 @@ class ProductManager {
                     }
                 })
 
-                await this.#writeFile(this.products)
+                await this.persistencia.saveData(this.products)
+                return productToUpdate
             } else {
-                throw new Error(`Producto no encontrado: ${error.message}`)
+                throw new Error(`Producto no encontrado`)
             }
 
         } catch (error) {
@@ -111,27 +85,27 @@ class ProductManager {
         } finally {
             this.products = []
         }
-
     }
 
     async deleteProduct(id) {
         try {
-            this.products = await this.#readFile()
-            const productToDelete = this.products.some(p => p.id === id)
+            this.products = await this.persistencia.getData()
+            const productToDelete = this.products.find(p => p.id === id)
 
             if (productToDelete) {
-                this.products = this.products.filter(p => p.id !== id)
-                await this.#writeFile(this.products)
+
+                this.products = this.products.filter(p => p.id !== id) || []
+                await this.persistencia.saveData(this.products)
+                return productToDelete
+
             } else {
                 throw new Error(`Producto no encontrado`)
             }
 
         } catch (error) {
-            throw new Error(`Error al eliminar producto ${error} `)
+            throw new Error(`Error al eliminar producto ${error.message} `)
         } finally {
             this.products = []
         }
     }
 }
-
-export default ProductManager

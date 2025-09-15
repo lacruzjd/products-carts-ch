@@ -1,0 +1,70 @@
+.products-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.products-list article {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 130px;
+    margin: var(--espacio-base);
+    border-radius: 5px;
+    background-color: var(--color-desaturado-terciario);
+    padding: var(--espacio-base);
+    box-shadow: var(--sombra-secundaria);
+}
+
+.products-list article .price {
+    padding: var(--espacio-base);
+    color: var(--color-cuaternario);
+    background-color: var(--color-secundario);
+    font-size: var(--titulo-secundario);
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 -10px;
+    border-radius: 0 0 5px 5px;
+    width: 100%;
+}
+
+article.oferta {
+    background-color: var(--color-luz-cuaternario);
+}
+
+article.oferta .oferta-parrafo {
+    font-size: var(--titulo-secundario);
+    color: var(--color-cuaternario);
+    font-weight: bold;
+}
+
+#render-real-time-products {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+#render-real-time-products article {
+    margin: var(--espacio-base);
+    ;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+#render-real-time-products img {
+    width: 4%;
+}
+
+#render-real-time-products article p,
+#render-real-time-products article h3 {
+    width: 50%;
+    margin: var(--espacio-base);
+}
+
+#render-real-time-products>article p.price {
+    background-color: transparent;
+    color: var(--color-desaturado-ppal);
+    font-size: var(--fuente-base);
+}

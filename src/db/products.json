@@ -1,58 +1,37 @@
 [
   {
-    "id": "6e50826f-a0eb-4575-b3b9-43f5363614b7",
-    "title": "Cafetera automática programable",
-    "description": "Cafetera digital con temporizador, capacidad de 1.5 litros y función de mantener caliente.",
-    "code": "CAF321",
-    "price": 60,
-    "status": true,
-    "stock": 45,
-    "category": "Electrodomésticos",
-    "thumbnails": [
-      "/products/img/cafetera1.jpg",
-      "/products/img/cafetera2.jpg"
-    ],
-    "oferta": true
-  },
-  {
-    "id": "224898bd-8b13-40dc-922d-dba2642f4187",
-    "title": "Mochila impermeable",
-    "description": "Mochila resistente al agua con múltiples compartimentos y diseño ergonómico.",
-    "code": "MOCH456",
-    "price": 39.99,
-    "status": true,
-    "stock": 75,
+    "id": "caef7657-4e4a-40eb-bde1-f67afd8f501f",
+    "title": "Urban Trek",
+    "description": "Mochila resistente al agua con múltiples compartimentos, ideal para viajes y uso diario.",
+    "code": "MTK001",
+    "price": 3490,
+    "stock": 3490,
     "category": "Accesorios",
+    "oferta": true,
     "thumbnails": [
       "/products/img/mochila1.jpg"
     ]
   },
   {
-    "id": "6aa576a5-240e-4ca2-912d-78936228e1eb",
-    "title": "Lámpara LED de escritorio",
-    "description": "Lámpara ajustable con luz blanca cálida y fría, ideal para estudio o trabajo nocturno.",
-    "code": "LAMP654",
-    "price": 24.99,
-    "status": true,
-    "stock": 150,
+    "title": "LumiGlow",
+    "description": "Lámpara LED con intensidad regulable y diseño minimalista para espacios modernos.",
+    "code": "LMP002",
+    "price": 1890,
+    "stock": 75,
     "category": "Iluminación",
     "thumbnails": [
-      "/products/img/lampara1.jpg",
-      "/products/img/lampara2.jpg"
+      "/products/img/lampara1.jpg"
     ]
   },
   {
-    "id": "6b4e539b-5771-4712-8913-ee30520222e7",
-    "title": "Tostadora de doble slot con ajuste de temperatura",
-    "description": "Tostadora eléctrica con dos ranuras anchas, 7 niveles de tostado y bandeja recogemigas extraíble.",
-    "code": "TST204",
-    "price": 45.99,
-    "status": true,
-    "stock": 30,
+    "title": "BrewMaster 3000",
+    "description": "Cafetera automática con temporizador y función de mantenimiento de temperatura.",
+    "code": "CAF003",
+    "price": 5290,
+    "stock": 40,
     "category": "Electrodomésticos",
     "thumbnails": [
-      "/products/img/tostadora1.jpg",
-      "/products/img/tostadora2.jpg"
+      "/products/img/cafetera1.png"
     ]
   }
 ]

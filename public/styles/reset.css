@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  font-family: var(--fuente-ppal);
+  font-size: var(--fuente-base);
+}
+
+h1 {
+  font-size: var(--titulo-ppal);
+  font-weight: 600;
+}
+
+h2 {
+  font-size: var(--titulo-secundario);
+  margin: var(--espacio-secundario);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--titulo-terciario);
+  margin: var(--espacio-terciario);
+  font-weight: 600;
+}

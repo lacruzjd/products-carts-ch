@@ -1,16 +1,22 @@
 export default class Product {
-  constructor({ id, title, description, code, price, status, stock, category, thumbnails }) {
-    if (!id || !title || !description || !code || !price || !status || !stock || !category || !thumbnails) {
+
+  constructor({ id, title, description, code, price, stock, category, thumbnails }) {
+    if (!id || !title || !description || !code || !price || !stock || !category || !thumbnails) {
       throw new Error('Todos los campos son obligatorios')
+    }
+
+    console.log(!isNaN(Number(price)))
+
+    if (isNaN(Number(price)) || isNaN(Number(stock))) {
+      throw new Error('El dato del precio o el stock deben ser numerico')
     }
 
     this.id = id
     this.title = title
     this.description = description
     this.code = code
-    this.price = price
-    this.status = status
-    this.stock = stock
+    this.price = parseFloat(price)
+    this.stock = parseInt(stock)
     this.category = category
     this.thumbnails = thumbnails
   }
