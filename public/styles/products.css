@@ -46,7 +46,6 @@ article.oferta .oferta-parrafo {
 
 #render-real-time-products article {
     margin: var(--espacio-base);
-    ;
     width: 90%;
     display: flex;
     flex-direction: row;
@@ -67,4 +66,15 @@ article.oferta .oferta-parrafo {
     background-color: transparent;
     color: var(--color-desaturado-ppal);
     font-size: var(--fuente-base);
+}
+
+@media (max-width: 700px) {
+   
+#render-real-time-products article {
+    margin: var(--espacio-base);
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 }
