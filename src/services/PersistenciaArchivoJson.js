@@ -28,4 +28,12 @@ export default class PersistenciaArchivoJson {
             throw new Error(`Error al escribir en archivo: ${error.message}`)
         }
     }
+    
+    async deleteFile(filePath) {
+        try {
+            await fs.unlink(filePath)
+        } catch (error) {
+            throw new Error(`Error al eliminar archivo: ${error.message}`)   
+        }
+    }
 }

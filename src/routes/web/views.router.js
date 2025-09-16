@@ -27,7 +27,6 @@ const productsManager = new ProductManager(persiencia)
 
 viewRoutes.get('/', async (req, res) => {
   const products = await productsManager.getProducts()
-  console.log(products)
   res.render('home', {
     title: 'Products & Carts',
     products

@@ -1,5 +1,8 @@
+<script src="./socket.io/socket.io.js" defer></script>
+<script src="./public/js/socket.client.js" defer></script>
+
 <header>
-        <h1>{{title}}</h1>
+    <h1>{{title}}</h1>
     <nav>
         <a href="/">Inicio</a>
     </nav>
@@ -12,9 +15,9 @@
             <label for="title" class="title">Titulo
                 <input type="text" name="title" id="title"></label>
             <label for="code" class="code">Codigo
-                <input type="text" name="code" id="code"></label> 
+                <input type="text" name="code" id="code"></label>
             <label for="code" class="stock">Stock
-                <input type="number" name="stock" id="stock" min="1" ></label>
+                <input type="number" name="stock" id="stock" min="1"></label>
             <label for="price" class="price">Precio
                 <input type="number" name="price" id="price" min="1" step="0.01"></label>
             <label for="category" class="category">Categoria

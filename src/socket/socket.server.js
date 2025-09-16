@@ -51,9 +51,7 @@ export default function socket(io) {
         })
 
         socket.on('deleteProduct', async (id) => {
-
             try {
-
                 await productsManager.deleteProduct(id)
 
                 const updatedProducts = await productsManager.getProducts();

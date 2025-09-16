@@ -53,7 +53,7 @@ export const addProducts = async (req, res) => {
             if (req.files) {
                 req.body.thumbnails = req.files.map(file => file.filename)
             }
-            console.log('controller', req.body)
+
             await productManager.addProducts(req.body)
 
             // Guardado de Imagenes 

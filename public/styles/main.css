@@ -30,10 +30,27 @@ main {
 }
 
 footer {
+  bottom: 0;
+  left: 0;
   width: 100%;
   color: white;
   padding: 10px 0;
-  position: absolute;
-  bottom: 0;
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  background: linear-gradient(135deg, var(--color-ppal), var(--color-luz-terciario));
+  z-index: 1000; /* para asegurarte de que esté por encima de otros elementos */
+}
+
+footer p {
+  margin: 0 10px;
+}
+
+@media (max-width: 700px) {
+
+  :root {
+    --fuente-base: 12px;
+  }
+
+  header {
+  padding: 10px 20px;
+  font-size: 10px;
+}
 }

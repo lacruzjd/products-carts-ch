@@ -1,6 +1,14 @@
 import Cart from '../models/Cart.js'
 import { IdGenerator } from '../services/IdGenerator.js'
 import ProductManager from './products.manager.js'
+import PersistenciaArchivoJson from '../services/PersistenciaArchivoJson.js'
+import { config } from '../config/config.js'
+import path from 'path'
+
+// Ruta para la obtencion de los productos
+const pathProducts = path.join(config.paths.db, 'products.json')
+const persistencia = new PersistenciaArchivoJson(pathProducts)
+const productManager = new ProductManager(persistencia)
 
 // Clase para gestionar los carros de compra
 class CartManager {
@@ -73,7 +81,7 @@ class CartManager {
             this.carts = await this.persistencia.getData()
 
             const cart = await this.carts.find(c => c.id === cartId)
-            const product = await new ProductManager().getProductById(productId)
+            const product = await productManager.getProductById(productId)
 
             if (cart && product) {
 

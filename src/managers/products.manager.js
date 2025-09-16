@@ -1,5 +1,7 @@
 import crypto from 'crypto'
 import Product from '../models/Product.js'
+import path from 'path'
+import { config } from '../config/config.js'
 
 //Clase para gestionar los productos
 export default class ProductManager {
@@ -93,8 +95,14 @@ export default class ProductManager {
             const productToDelete = this.products.find(p => p.id === id)
 
             if (productToDelete) {
-
                 this.products = this.products.filter(p => p.id !== id) || []
+
+                if (productToDelete.thumbnails.length > 0) {
+                    productToDelete.thumbnails.forEach(foto => {
+                        this.persistencia.deleteFile(path.join(config.paths.multer, foto))
+                    })
+                }
+
                 await this.persistencia.saveData(this.products)
                 return productToDelete
 

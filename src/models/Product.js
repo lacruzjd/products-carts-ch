@@ -5,8 +5,6 @@ export default class Product {
       throw new Error('Todos los campos son obligatorios')
     }
 
-    console.log(!isNaN(Number(price)))
-
     if (isNaN(Number(price)) || isNaN(Number(stock))) {
       throw new Error('El dato del precio o el stock deben ser numerico')
     }

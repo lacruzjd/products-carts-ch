@@ -1,4 +1,4 @@
-import { server } from './src/server.js';
+import { server } from './src/app.js';
 
 const PORT = 8080;
 

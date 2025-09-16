@@ -5,7 +5,6 @@ import { config } from "../../config/config.js"
 
 // Ruta del archivo para la persistencia de los datos de los carritos de compras
 const pathcarts = path.join(config.paths.db, 'carts.json')
-
 const persistencia = new PersistenciaArchivoJson(pathcarts)
 const cartManager = new CartManager(persistencia)
 
@@ -27,7 +26,7 @@ export const createCart = async (req, res) => {
     }
 }
 
-export const gerCartById = async (req, res) => {
+export const getCartById = async (req, res) => {
     const { cid } = req.params
 
     try {

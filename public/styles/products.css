@@ -77,4 +77,10 @@ article.oferta .oferta-parrafo {
     flex-direction: column;
     align-items: flex-start;
 }
+
+.products-list article {
+    width: 100%;
+   
+}
+
 }

@@ -5,7 +5,7 @@
 }
 
 #formulario-real-time form {
-  margin: var(--espacio-secundario);
+  margin: var(--espacio-terciario) 0;
   display: flex;
   background: var(--color-desaturado-terciario);
   border-radius: 12px;
@@ -45,6 +45,10 @@ form label.price,
 form label.stock,
 form label.code {
   width: 20%;
+}
+
+form input#fotos {
+  width: 95%;
 }
 
 form label.description,
