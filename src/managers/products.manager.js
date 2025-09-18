@@ -18,10 +18,9 @@ export default class ProductManager {
                 throw new Error(`Codigo de producto duplicado.`)
             }
 
-            product.id = crypto.randomUUID()
-
             const newProduct = new Product(product)
-
+            newProduct.id = crypto.randomUUID()
+            
             this.products.push(newProduct)
 
             await this.persistencia.saveData(this.products)
