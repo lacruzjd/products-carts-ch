@@ -9,7 +9,7 @@
     "category": "Accesorios",
     "oferta": true,
     "thumbnails": [
-      "/products/img/mochila1.jpg"
+      "/products/img/mochila1.png"
     ]
   },
   {
@@ -34,18 +34,6 @@
     "category": "Electrodomésticos",
     "thumbnails": [
       "/products/img/cafetera1.png"
-    ]
-  },
-  {
-    "id": "ba00d809-a180-45ab-a510-c312995aaade",
-    "title": "Mochila impermeable",
-    "description": "Mochila resistente al agua con múltiples compartimentos y diseño ergonómico.",
-    "code": "MOCooiuyoooooooj",
-    "price": 39.99,
-    "stock": 75,
-    "category": "Accesorios",
-    "thumbnails": [
-      "/products/img/mochila1.jpg"
     ]
   }
 ]
