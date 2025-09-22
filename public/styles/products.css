@@ -68,19 +68,37 @@ article.oferta .oferta-parrafo {
     font-size: var(--fuente-base);
 }
 
-@media (max-width: 700px) {
-   
-#render-real-time-products article {
-    margin: var(--espacio-base);
-    width: 90%;
+.product-details article {
+    flex-direction: row;
+    width: 100%;
+    align-items: self-start;
+}
+.product-details article section{
+    margin: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    height: 100%;
+
 }
 
-.products-list article {
-    width: 100%;
-   
+.product-details article img {
+    flex-direction: row;
+    width: 20%;
 }
+
+@media (max-width: 700px) {
+
+    #render-real-time-products article {
+        margin: var(--espacio-base);
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .products-list article {
+        width: 100%;
+
+    }
 
 }

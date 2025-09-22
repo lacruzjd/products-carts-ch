@@ -1,7 +1,7 @@
 export default class Product {
 
-  constructor({ id, title, description, code, price, stock, category, thumbnails }) {
-    if (!id || !title || !description || !code || !price || !stock || !category || !thumbnails) {
+  constructor({title, description, code, price, stock, category, thumbnails }) {
+    if (!title || !description || !code || !price || !stock || !category || !thumbnails) {
       throw new Error('Todos los campos son obligatorios')
     }
 
@@ -9,7 +9,6 @@ export default class Product {
       throw new Error('El dato del precio o el stock deben ser numerico')
     }
 
-    this.id = id
     this.title = title
     this.description = description
     this.code = code

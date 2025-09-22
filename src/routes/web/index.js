@@ -1,5 +1,5 @@
 import express from 'express'
-import viewRoutes from './views.router.js'
+import viewRoutes from './viewRouter.js'
 
 const webRoutes = express.Router()
 

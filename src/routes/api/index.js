@@ -1,10 +1,10 @@
 import express from 'express'
-import productsRouter from './products.router.js'
-import cartsRouter from './carts.router.js'
+import productRouter from './productRouter.js'
+import cartRouter from './cartRouter.js'
 
 const apiRoutes = express.Router()
 
-apiRoutes.use('/products', productsRouter)
-apiRoutes.use('/carts', cartsRouter)
+apiRoutes.use('/products', productRouter)
+apiRoutes.use('/carts', cartRouter)
 
 export default apiRoutes

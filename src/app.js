@@ -1,11 +1,11 @@
-import express from 'express';
-import { engine } from 'express-handlebars';
-import { config } from './config/config.js';
-import webRoutes from './routes/web/index.js';
-import apiRoutes from './routes/api/index.js';
+import express from 'express'
+import { engine } from 'express-handlebars'
+import { config } from './config/config.js'
+import webRoutes from './routes/web/index.js'
+import apiRoutes from './routes/api/index.js'
 import http from 'http'
 import { Server } from 'socket.io'
-import socket from './socket/socket.server.js'
+import socket from './socket/socketServer.js'
 
 const app = express();
 const server = http.createServer(app)
@@ -13,7 +13,7 @@ const server = http.createServer(app)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use('/public', express.static(config.paths.public))
-app.use('/products/img', express.static(config.paths.products.image))
+app.use('/products/img', express.static(config.paths.products.imageStorage))
 
 // Configurar Handlebars como motor de vistas
 app.engine('handlebars', engine())
@@ -36,5 +36,6 @@ app.use('/api', apiRoutes)
 
 //views
 app.use('/', webRoutes)
+
 
 export { app, server }
