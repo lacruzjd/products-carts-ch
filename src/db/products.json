@@ -9,7 +9,7 @@
     "category": "Accesorios",
     "oferta": true,
     "thumbnails": [
-      "/products/img/mochila1.png"
+      "/products/img/mochila1.jpg"
     ]
   },
   {
@@ -25,7 +25,6 @@
     ]
   },
   {
-    "id": "a5ffdc59-258b-49bb-b0b7-f61aab483127",
     "id": "57bd247e-a9ad-4d18-a80f-2bda79cf0fea",
     "title": "BrewMaster 3000",
     "description": "Cafetera automática con temporizador y función de mantenimiento de temperatura.",
@@ -46,7 +45,7 @@
     "stock": 75,
     "category": "Accesorios",
     "thumbnails": [
-       "/products/img/mochila1.jpg"
+      "/products/img/mochila1.jpg"
     ]
   }
 ]
