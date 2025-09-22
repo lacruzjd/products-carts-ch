@@ -1,9 +1,8 @@
 import { Router } from 'express'
 
-import { addProducts, deleteProduct, getProductById, getProducts, updateProduct } from '../../controllers/api/products.controller.js'
+import { addProducts, deleteProduct, getProductById, getProducts, updateProduct } from '../../controllers/api/productController.js'
 
 const productsRouter = Router()
-
 productsRouter.get('/', getProducts)
 productsRouter.get('/:pid', getProductById)
 productsRouter.post('/', addProducts)

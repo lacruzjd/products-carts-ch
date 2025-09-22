@@ -1,18 +1,6 @@
 [
   {
-    "id": "caef7657-4e4a-40eb-bde1-f67afd8f501f",
-    "title": "Urban Trek",
-    "description": "Mochila resistente al agua con múltiples compartimentos, ideal para viajes y uso diario.",
-    "code": "MTK001",
-    "price": 3490,
-    "stock": 3490,
-    "category": "Accesorios",
-    "oferta": true,
-    "thumbnails": [
-      "/products/img/mochila1.jpg"
-    ]
-  },
-  {
+    "id": "5a24755e-7d1a-4670-8dc9-d22b7cdbd015",
     "title": "LumiGlow",
     "description": "Lámpara LED con intensidad regulable y diseño minimalista para espacios modernos.",
     "code": "LMP002",
@@ -24,6 +12,7 @@
     ]
   },
   {
+    "id": "a5ffdc59-258b-49bb-b0b7-f61aab483127",
     "title": "BrewMaster 3000",
     "description": "Cafetera automática con temporizador y función de mantenimiento de temperatura.",
     "code": "CAF003",
@@ -32,6 +21,18 @@
     "category": "Electrodomésticos",
     "thumbnails": [
       "/products/img/cafetera1.png"
+    ]
+  },
+  {
+    "id": "ba00d809-a180-45ab-a510-c312995aaade",
+    "title": "Mochila impermeable",
+    "description": "Mochila resistente al agua con múltiples compartimentos y diseño ergonómico.",
+    "code": "MOCooiuyoooooooj",
+    "price": 39.99,
+    "stock": 75,
+    "category": "Accesorios",
+    "thumbnails": [
+       "/products/img/mochila1.jpg"
     ]
   }
 ]

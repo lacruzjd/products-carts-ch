@@ -1,16 +1,8 @@
-import CartManager from "../../managers/carts.manager.js"
-import PersistenciaArchivoJson from "../../services/PersistenciaArchivoJson.js"
-import path from 'path'
-import { config } from "../../config/config.js"
-
-// Ruta del archivo para la persistencia de los datos de los carritos de compras
-const pathcarts = path.join(config.paths.db, 'carts.json')
-const persistencia = new PersistenciaArchivoJson(pathcarts)
-const cartManager = new CartManager(persistencia)
+import CartService from "../../services/CartService.js"
 
 export const getCarts = async (req, res) => {
     try {
-        const carts = await cartManager.getAllCarts()
+        const carts = await CartService.getAllCarts()
         res.status(200).json(carts)
     } catch (error) {
         res.status(404).json({ error: error.message })
@@ -19,8 +11,8 @@ export const getCarts = async (req, res) => {
 
 export const createCart = async (req, res) => {
     try {
-        const newCart = await cartManager.createCart()
-        res.status(201).json({ mensaje: 'Carrito creado con exito', id: newCart.id })
+        const newCart = await CartService.createCart()
+        res.status(201).json({ mensaje: 'Carrito creado con exito', id: newCart })
     } catch (error) {
         res.status(404).json({ error: error.message })
     }
@@ -30,7 +22,7 @@ export const getCartById = async (req, res) => {
     const { cid } = req.params
 
     try {
-        const productsInCart = await cartManager.getCartById(cid)
+        const productsInCart = await CartService.getCartById(cid)
         res.status(200).json(productsInCart.products)
     } catch (error) {
         res.status(404).json({ error: error.message })
@@ -39,10 +31,31 @@ export const getCartById = async (req, res) => {
 
 export const addProductToCart = async (req, res) => {
     const { cid, pid } = req.params
-
+    
     try {
-        await cartManager.addProductToCart(cid, pid)
+        await CartService.addProductToCart(cid, pid)
         res.status(201).json({ mensaje: 'Producto agreagdo al carrito' })
+    } catch (error) {
+        res.status(404).json({ error: error.message })
+    }
+}
+
+export const deteleProductCart = async (req, res) => {
+    const { cid, pid } = req.params
+ try {
+        await CartService.deteleProductCart(cid, pid)
+        res.status(201).json({ mensaje: 'Producto eliminado del carrito' })
+    } catch (error) {
+        res.status(404).json({ error: error.message })
+    }
+}
+
+export const deteleProductscart = async (req, res) => {
+    const {cid} = req.params
+    
+    try {
+        await CartService.deteleProductscart(cid)
+        res.status(201).json({ mensaje: 'Productos eliminados del carrito' })
     } catch (error) {
         res.status(404).json({ error: error.message })
     }

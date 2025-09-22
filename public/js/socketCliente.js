@@ -10,10 +10,11 @@ form.addEventListener('submit', async (e) => {
     let { fotos, ...newProduct } = dataProduct
 
     fotos = formData.getAll('fotos')
+
     newProduct.thumbnails = []
     fotos.forEach(foto => {
         if (foto.name) {
-            newProduct.thumbnails.push(`/products/img/${foto.name.replace(/ /g, '')}`)
+            newProduct.thumbnails.push(foto.name)
         }
     })
 

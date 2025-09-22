@@ -1,0 +1,22 @@
+<main id="products">
+    <section class="products-list product-details">
+        <article>
+            {{#if product.thumbnails}}
+            {{#each product.thumbnails}}
+            <img src={{this}} alt={{this}}>
+            {{/each}}
+            {{else}}
+            <img src='/products/img/noimage.jpg' alt='No hay imagen'>
+                {{/if}} 
+            <section>
+                <h3>{{product.title}}</h3>
+                <p>{{product.description}}</p>
+                <p class="price">${{product.price}}</p>
+            </section>
+            <section>
+            <p>Disponible(s): {{product.stock}}</p>
+            <a href=''>Agregar al Carrito</a>
+            </section>
+        </article>
+    </section>
+</main>

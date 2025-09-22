@@ -12,7 +12,7 @@
             {{/if}}
             <p class="oferta-parrafo">Oferta!!!</p>
             <h3>{{title}}</h3>
-            <p>{{description}}</p>
+            <a href='/product/{{id}}'>Detalles</a>
             <p class="price">${{price}}</p>
         </article>
         {{else}}
@@ -22,7 +22,7 @@
             {{else}}
             <img src='/products/img/noimage.jpg' alt='No hay imagen'>
             {{/if}} <h3>{{title}}</h3>
-            <p>{{description}}</p>
+            <a href='/product/{{id}}'>Detalles</a>
             <p class="price">${{price}}</p>
         </article>
         {{/if}}
