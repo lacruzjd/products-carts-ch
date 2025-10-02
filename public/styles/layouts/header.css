@@ -1,0 +1,17 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--color-c1);
+    color: var(--color-d1);
+    padding: var(--espacio-s);
+    z-index: 1000;
+}
+
+h1 {
+    font-size: var(--titulo-xl);
+}

@@ -1,1 +1,0 @@
-manejar req, res try catch 

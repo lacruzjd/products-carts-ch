@@ -1,46 +1,48 @@
 //Clase para gestionar los productos
 export default class ProductManager {
-    constructor(persistencia) {
-        this.productPersistencia = persistencia
+    constructor(modelPersistence) {
+        if (!modelPersistence) throw new Error('Debe agregar un modelo de persistencia')
+        this.model = modelPersistence
     }
 
-    async addProducts(newProduct) {
+    async addProduct(productToAdd) {
         try {
-            return await this.productPersistencia.save(newProduct)
+            const newProduct = new this.model(productToAdd)
+            return newProduct.save()
         } catch (error) {
-            throw new Error(error.message)
+            throw new Error(`Error al guardar producto`)
         }
     }
 
     async getProducts() {
         try {
-            const products = await this.productPersistencia.find()
-            return products
+            return await this.model.find()
         } catch (error) {
-            throw new Error(`Ocurrio un error al obtener lista de productos: ${error.message}`)
+            throw new Error(`Ocurrio un error al obtener lista de productos`)
         }
     }
 
-    async getProductById(id) {
+    async getProductById(pid) {
+        console.log('manager', pid)
         try {
-            const productById = await this.productPersistencia.findById(id)
+            const productById = await this.model.findById(pid).lean()
             return productById
         } catch (error) {
-            throw new Error(error.message)
+            throw new Error(`Producto no encontrado`)
         }
     }
 
-    async updateProduct(id, data) {
+    async updateProduct(pid, data) {
         try {
-            return await this.productPersistencia.findByIdAndUpdate(id, data)
+            return await this.model.findByIdAndUpdate(pid, data, { new: true })
         } catch (error) {
-            throw new Error(`Error al actualizar: ${error.message}`)
+            throw new Error(`Error al actualizar producto: ${error.message}`)
         }
     }
 
-    async deleteProduct(id) {
+    async deleteProduct(pid) {
         try {
-            await this.productPersistencia.findByIdAndDelete(id)
+            return await this.model.findByIdAndDelete(pid)
         } catch (error) {
             throw new Error(`Error al eliminar producto: ${error.message} `)
         }

@@ -1,41 +1,42 @@
-class CartManager {
-    constructor(cartPersistence){
-        this.cartPersistence = cartPersistence
+//Clase para gestionar los productos
+export default class CartManager {
+    constructor(model) {
+        if(!model) throw new Error('Debe agregar un modelo de persistencia')
+        this.model = model
     }
 
-    static async addCart(data) {
-        cartPersistence.setEntidad(data)
+    async createCart(newCart) {
         try {
-            const id = await cartPersistence.save()
-            return id
+            const cartSaved = new this.model(newCart)
+            return cartSaved.save()
         } catch (error) {
-            throw new Error(error.message)
+            throw new Error(`Error al crear el carrito: ${error.message}`)
         }
     }
 
-    static async getAllCarts() {
+    async getCarts() {
         try {
-            return await cartPersistence.find()
+            return await this.model.find()
         } catch (error) {
-            throw new Error(error.message)
+            throw new Error(`Ocurrio un error al obtener el carrito: ${error.message}`)
         }
     }
-    
-    static async getCartById(id) {
+
+    async getCartById(cid) {
         try {
-            return await cartPersistence.findById(id)
+            const productById = await this.model.findById(cid)
+            return productById
         } catch (error) {
-            throw new Error(error.message)
+            throw new Error(`No se pudo obtener el carrito: ${error.message}`)
         }
     }
-    
-    static async updateCart(id, data) {
+
+    async updateCart(cid, newProducts) {
+        console.log(newProducts)
         try {
-            await cartPersistence.findByIdAndUpdate(id, data)
+            return await this.model.findByIdAndUpdate(cid, newProducts)
         } catch (error) {
-            throw new Error(error.message)
+            throw new Error(`Error al actualizar el carrito: ${error.message}`)
         }
     }
 }
-
-export default CartManager

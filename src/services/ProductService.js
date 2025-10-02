@@ -1,53 +1,91 @@
-import { config } from "../config/config.js"
-import Product from "../entities/Product.js"
-import ProductManager from "../managers/ProductManager.js"
-import PersisteciaJson from "../services/PersistenciaArchivoJsonDAO.js"
-import StorageService from "./StorageService.js"
-import path from "path"
-
-const archivoDePersistencia = path.join(config.paths.db, 'products.json')
-const persisteciaJson = new PersisteciaJson(archivoDePersistencia)
-const porductManager = new ProductManager(persisteciaJson)
+import Product from '../entities/Product.js'
 
 export default class ProductService {
+    constructor(productManager, storageServiceFotos) {
+        this.productManager = productManager
+        this.storageServiceFotos = storageServiceFotos
+    }
 
-    static async createProduct(productData) {
+    async createProduct(productData) {
         try {
             const { newProduct, fotos } = productData
-            const urlImagenes = await StorageService.saveImages({ fotos, nombresImagenes: newProduct.thumbnails })
 
-            newProduct.thumbnails = urlImagenes
+            if (!newProduct.thumbnails) {
+                newProduct.thumbnails = []
+            }
 
-            const productToSve = new Product(newProduct)
+            if (fotos) {
+                const urlImagenes = await this.storageServiceFotos.saveImages({ fotos, nombresImagenes: newProduct.thumbnails })
+                newProduct.thumbnails = urlImagenes
+            }
 
-            return await porductManager.addProducts(productToSve)
+            const productSaved = await this.getAllProducts()
+
+            if (productSaved.some(p => p.code === newProduct.code)) {
+                this.storageServiceFotos.deleteImages(newProduct.thumbnails)
+                throw new Error(`codigo de producto duplicado`)
+            }
+
+            let productToSave = null
+            try {
+                productToSave = new Product(newProduct)
+            } catch (error) {
+                this.storageServiceFotos.deleteImages(newProduct.thumbnails)
+                throw new Error(`Faltan datos ${error.message}`)
+            }
+
+            return await this.productManager.addProduct(productToSave)
         } catch (error) {
-            throw new Error(`No se pudo agregar el producto ${error.message}`)
+            throw new Error(`No se pudo agregar el producto: ${error.message}`)
         }
     }
 
-    static async getAllProducts() {
-        const productList = await porductManager.getProducts()
-        if (!productList) throw new Error('No hay productos a la venta')
-        return productList
+    async getAllProducts() {
+        try {
+            const productList = await this.productManager.getProducts()
+            if (!productList) throw new Error('No hay productos en la lista')
+            return productList
+        } catch (error) {
+            throw new Error(`No se pudo obtener los productos: ${error.message}`)
+
+        }
+
     }
 
-    static async getProductsById(id) {
-        const product = await porductManager.getProductById(id)
-        if (!product) throw new Error('Producto no encontrado')
-        return product
+    async getProductById(pid) {
+        try {
+            const product = await this.productManager.getProductById(pid)
+            if (!product) throw new Error(`Producto con id ${pid} no encontrado`)
+            return product
+        } catch (error) {
+            throw new Error(`No se pudo encontrar el producto: ${error.message}`)
+
+        }
     }
 
-    static async updateProducts(id, data) {
-        console.log(data)
-        return porductManager.updateProduct(id, data)
+    async updateProduct(pid, data) {
+        try {
+            const updatedProduct = await this.productManager.updateProduct(pid, data)
+            if (!updatedProduct) throw new Error('No se encontro el Producto a actualizar')
+            return updatedProduct
+        } catch (error) {
+
+            throw new Error(`No se pudo actualizar el producto: ${error.message}`)
+        }
+
     }
 
-    static async deleteProduct(id) {
-        const product = await this.getProductsById(id)
-        const imagesDelete = product.thumbnails
-        console.log(await imagesDelete)
-        await porductManager.deleteProduct(id)
-        await StorageService.deleteImages(imagesDelete)
+    async deleteProduct(pid) {
+        try {
+            const productToDelete = await this.getProductById(pid)
+            if (productToDelete) {
+                await this.productManager.deleteProduct(pid)
+                if (productToDelete.thumbnails && productToDelete.thumbnails.length > 0) {
+                    await this.storageServiceFotos.deleteImages(productToDelete.thumbnails)
+                }
+            }
+        } catch (error) {
+            throw new Error(`No se pudo Eliminar el producto: ${error.message}`)
+        }
     }
 }

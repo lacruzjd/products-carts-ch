@@ -38,10 +38,11 @@ socket.on('productsList', productsList => {
 
     productsList.forEach(product => {
         const productoArt = document.createElement('article')
+        productoArt.className = 'product'
 
         if (product.oferta) productoArt.className = 'oferta'
         productoArt.innerHTML = ` 
-            <img src="${product.thumbnails && product.thumbnails.length > 0 ? product.thumbnails[0] : 'products/img/noimage.jpg'}" alt="${product.title}" width="150">
+            <img src="${product.thumbnails && product.thumbnails.length > 0 ? product.thumbnails[0] : 'products/img/noimage.png'}" alt="${product.title}" width="150">
             ${product.oferta ? '<p><strong>Oferta</strong></p>' : ''}
             <h3>${product.title}</h3>
             <p>Codigo: ${product.code}</p>
@@ -49,7 +50,7 @@ socket.on('productsList', productsList => {
             <p class="price">Precio: $${product.price}</p>
             <p>Categoria: ${product.category}</p>
             <p>Description: ${product.description.slice(0, 15).concat('...')}</p>
-            <button data-id="${product.id}" id="delete-product-btn">Eliminar</button>`
+            <button data-id="${product._id}" id="delete-product-btn">Eliminar</button>`
 
         productListRender.appendChild(productoArt)
     })
@@ -59,11 +60,12 @@ socket.on('productsList', productsList => {
 productListRender.addEventListener('click', (e) => {
     if (e.target && e.target.id === 'delete-product-btn') {
         const productId = e.target.getAttribute('data-id')
+        const title = document.querySelector('article').querySelector('h3').textContent
         if (productId) {
             try {
 
                 Swal.fire({
-                    title: "Quieres Eliminar el Producto?",
+                    title: `Quieres Eliminar el Producto ${title}?`,
                     text: "Elegí una opción",
                     showCancelButton: true,
                     confirmButtonText: "Eiminar",
@@ -71,7 +73,7 @@ productListRender.addEventListener('click', (e) => {
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Swal.fire("Eliminado!", "", "success");
+                        Swal.fire("Eliminado!", title, "success");
                         socket.emit('deleteProduct', productId)
                     } else if (result.isDenied) {
 

@@ -1,0 +1,37 @@
+html {
+    /* Paleta de colores */
+    --color-c1: #1f4067; 
+    --color-c2: #e2e2e2;
+    --color-p1: #28a95c;
+    --color-p2: #80afa4;
+    --color-l1: #62ea4a;
+    --color-l2: #32be68;
+    --color-l3: #d8fed4;
+    --color-d1: #eeeeee;
+    --color-d2: #8896a9;
+    --color-d3: #1c1e1f;
+ 
+    /* tipografia */
+    /* Familia tipografica */
+    --fuente-ppal: 'Segoe UI', sans-serif;
+    --fuente-2: "";
+    /* Tamano fuentes */
+    --fuente-base: 14px;
+    --titulo-xs: calc(var(--titulo-s)*.618);
+    --titulo-s: calc(var(--fuente-base)*.618);
+    --titulo-m: calc(var(--fuente-base));
+    --titulo-l: calc(var(--fuente-base)*1.618);
+    --titulo-xl: calc(var(--titulo-l)*1.618);
+
+    /* espacios*/
+    --espacio-base: 14px;
+    --espacio-xs: calc(var(--espacio-s)*.618);
+    --espacio-s: calc(var(--espacio-base)*.618);
+    --espacio-m: var(--espacio-base);
+    --espacio-l: calc(var(--espacio-base)* 1.618);
+    --espacio-xl: calc(var(--espacio-l)* 1.618);
+
+    /* sombras  */
+    --sombra-ppal: 0 6px 7px rgba(0, 0, 0, 0.08);
+    --sombra-secundaria: 0 4px 4px rgba(0, 0, 0, 0.08);
+}

@@ -1,0 +1,40 @@
+#real-time-products {
+    gap: var(--espacio-xs);
+}
+
+#real-time-products article {
+    margin: 0 var(--espacio-xs);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#real-time-products article img {
+    width: 5%;
+}
+
+#real-time-products article img {
+    width: 5%;
+    border: none;
+}
+
+#real-time-products article>* {
+    width: 40%;
+    padding: var(--espacio-xs);
+    margin: var(--espacio-xs);
+    border-left: solid 1px var(--color-p1);
+}
+
+@media (max-width: 500px) {
+
+    #real-time-products {
+        flex-direction: column;
+    }
+
+    #real-time-products article {
+        width: 80%;
+        flex-direction: column;
+    }
+
+}

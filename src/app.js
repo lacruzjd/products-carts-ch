@@ -6,6 +6,7 @@ import apiRoutes from './routes/api/index.js'
 import http from 'http'
 import { Server } from 'socket.io'
 import socket from './socket/socketServer.js'
+import mongoose from 'mongoose'
 
 const app = express();
 const server = http.createServer(app)
@@ -31,11 +32,13 @@ const io = new Server(server, {
 
 socket(io)
 
+// Configuracion mongoose
+mongoose.connect(config.dataBase.mongoDb)
+
 //Api 
 app.use('/api', apiRoutes)
 
 //views
 app.use('/', webRoutes)
-
 
 export { app, server }

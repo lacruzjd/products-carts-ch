@@ -11,9 +11,9 @@ export const config = {
    PORT: process.env.PORT,
    dataBase: {
       mongoDb: process.env.MONGO_URI,
+      dbJson: path.join(__dirname, '../dbFile/json'),
    },
    paths: {
-      db: path.join(__dirname, '../db'),
       public: path.join(__dirname, '../../public'),
       multer: path.join(__dirname, '../uploads'),
       upload: path.join(__dirname, '../uploads'),
@@ -24,7 +24,7 @@ export const config = {
       },
       products: {
          imageStorage: path.join(__dirname, '../uploads/products/img/'),
-         imageUrl: path.join('/products/img/')
+         imageUrl: '/products/img/'
       }
    },
 

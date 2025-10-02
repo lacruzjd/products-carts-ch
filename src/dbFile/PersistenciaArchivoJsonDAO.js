@@ -1,11 +1,15 @@
 import fs from 'fs/promises'
 
 export default class PersistenciaArchivoJsonDAO {
+
     constructor(path) {
         this.path = path
     }
 
-    // Metodos privados para operaciones de bajo nivel
+    async #saveData(data) {
+        await fs.writeFile(this.path, JSON.stringify(data, null, 2))
+    }
+
     async  #getData() {
         try {
             await fs.access(this.path)
@@ -16,19 +20,18 @@ export default class PersistenciaArchivoJsonDAO {
         return JSON.parse(data)
     }
 
-    async #saveData(data) {
-        await fs.writeFile(this.path, JSON.stringify(data, null, 2))
-    }
+    async save(data) {
+        const object = { id: crypto.randomUUID(), ...data }
+        try {
+            const file = await this.#getData()
+            file.push(object)
 
-    // Metodos para la logica de persistencia
-    async save(entidad) {
-        // Agregar un id unico a cada entidad
-        const entidadToSave = { id: crypto.randomUUID(), ...entidad }
-        const file = await this.#getData()
-        file.push(entidadToSave)
+            await this.#saveData(file)
+            return object
+        } catch (error) {
+            throw new Error(`Error al guardar datos: ${error.message} `)
+        }
 
-        await this.#saveData(file)
-        return entidadToSave
     }
 
     async find() {
@@ -44,7 +47,7 @@ export default class PersistenciaArchivoJsonDAO {
         const file = await this.#getData()
         const dataToUptade = await file.find(e => e.id === id)
         console.log(data)
-        
+
         if (dataToUptade) {
             Object.keys(await data).forEach(k => {
                 if (k !== dataToUptade[k] && k !== 'id') {
@@ -68,9 +71,8 @@ export default class PersistenciaArchivoJsonDAO {
         if (dataToDelete) {
             file = await file.filter(e => e.id !== id)
             await this.#saveData(file)
-            return true
         } else {
-            return false
+            throw new Error('Dato no encontrado')
         }
     }
 }

@@ -1,2 +1,36 @@
-{{> header}}
-{{> product}}
+<header>
+    <h1>{{title}}</h1>
+    <nav>
+        <a href="/">Tienda</a>
+    </nav>
+</header>
+
+<main id="cart">
+    <section class="products-list product-details">
+        {{log product}}
+        {{#if product}}
+        <article class="product">
+            {{#if product.thumbnails}}
+            {{#each product.thumbnails}}
+            <img src={{this}} alt={{this}}>
+            {{/each}}
+            {{else}}
+            <img src='/products/img/noimage.png' alt='No hay imagen'>
+            {{/if}}
+                <h3>{{product.title}}</h3>
+                <p>{{product.category}}</p>
+                <p>{{product.description}}</p>
+                {{#if product.oferta}}
+                <P>Oferta</P>
+                {{/if}}
+                <p class="price">Precio: ${{product.price}}</p>
+                <p class="stock">Disponible(s): {{product.stock}}</p>
+                <section>
+                <button data-cartid="{{cartId}}" data-productid="{{product._id}}" class="add-product">Agregar al carrito</button>
+                </section>
+        </article>
+        {{else}}
+        <p>No hay productos en el carrito</p>
+        {{/if}}
+    </section>
+</main>

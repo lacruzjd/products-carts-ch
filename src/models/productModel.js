@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
+import mongoosePaginate from "mongoose-paginate-v2"
 
-const userSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true      
@@ -12,8 +13,7 @@ const userSchema = new mongoose.Schema({
     code: {
         type: String,
         required: true,
-        index: true,
-        unique: true
+        unique: true,
     },
     price: {
         type: Number,
@@ -33,4 +33,14 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('Product', userSchema)
+productSchema.plugin(mongoosePaginate)
+// productSchema.index({code: 1, category: 1})
+
+productSchema.virtual('id').get(function() {
+    return this._id.toHexString()
+})
+
+productSchema.set('toJSON', {virtual: true})
+productSchema.set('toObject', {virtual: true})
+
+export default mongoose.model('Product', productSchema)

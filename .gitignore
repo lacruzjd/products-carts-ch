@@ -10,3 +10,4 @@ node_modules/
 
 # IDEs
 .vscode/
+src/managers/Manager.js

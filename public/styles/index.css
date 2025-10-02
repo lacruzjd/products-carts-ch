@@ -1,0 +1,18 @@
+/* base */
+@import url(./base/vaibales.css);
+@import url(./base/reset.css);
+
+/* layout */
+@import url(./layouts/header.css);
+@import url(./layouts/main.css);
+@import url(./layouts/footer.css);
+@import url(./layouts/products.css);
+@import url(./layouts/paginacion.css);
+@import url(./layouts/nav.css);
+@import url(./layouts/real-time-products.css);
+@import url(./layouts/carrito.css);
+
+/* elementos */
+@import url(./elementos/botones.css);
+@import url(./elementos/enlaces.css);
+@import url(./elementos/formulario.css);

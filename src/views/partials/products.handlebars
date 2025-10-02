@@ -1,36 +1,46 @@
 <main id="products">
-    <h2>Productos</h2>
+    {{#if this.products}}
+    <section class="filtro">
+        <form method="GET" action="/">
+            <label for="category">Categoría:
+                <select name="category" id="category">
+                    <option value="">Todas</option>
+                    {{#each categorias}}
+                    <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </label>
+
+            <label for="price">Ordenar por precio:
+                <select name="order_price" id="price">
+                    <option value="asc">Menor a mayor</option>
+                    <option value="desc">Mayor a menor</option>
+                </select>
+            </label>
+
+            <button type="submit">Filtrar</button>
+        </form>
+    </section>
+
     <section class="products-list">
-        {{#if products}}
-        {{#each products}}
-        {{#if oferta}}
-        <article class="oferta">
-            {{#if thumbnails.[0]}}
-            <img src={{thumbnails.[0]}} alt={{thumbnails.[0]}}>
-            {{else}}
-            <img src='/products/img/noimage.jpg' alt='No hay imagen'>
-            {{/if}}
-            <p class="oferta-parrafo">Oferta!!!</p>
-            <h3>{{title}}</h3>
-            <a href='/product/{{id}}'>Detalles</a>
-            <p class="price">${{price}}</p>
-        </article>
-        {{else}}
-        <article>
-            {{#if thumbnails.[0]}}
-            <img src={{thumbnails.[0]}} alt={{thumbnails.[0]}}>
-            {{else}}
-            <img src='/products/img/noimage.jpg' alt='No hay imagen'>
-            {{/if}} <h3>{{title}}</h3>
-            <a href='/product/{{id}}'>Detalles</a>
-            <p class="price">${{price}}</p>
-        </article>
-        {{/if}}
+        {{#each this.products}}
+        {{> product this cartId=../cartId}}
         {{/each}}
-        {{else}}
-        <article>
-            <h2>No hay productos disponibles</h2>
-        </article>
+    </section>
+
+    <section class="pagination">
+        {{#if hasPrevPage}}
+        <a href="/?page={{prevPage}}&limit=10">Anterior</a>
+        {{/if}}
+        <span>Página {{currentPage}} de {{totalPages}}</span>
+        {{#if hasNextPage}}
+        <a href="/?page={{nextPage}}&limit=10">Siguiente</a>
         {{/if}}
     </section>
+    {{else}}
+
+    <section>
+        <h2>No hay productos agregados</h2>
+    </section>
+    {{/if}}
 </main>

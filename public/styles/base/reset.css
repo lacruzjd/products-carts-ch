@@ -1,0 +1,45 @@
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-c2);
+}
+
+section, article, button, img, .offer, form {
+  border-radius: var(--espacio-xs);
+}
+
+img,
+svg,
+iframe,
+video,
+audio {
+  max-width: 100%;
+  border: 0;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
