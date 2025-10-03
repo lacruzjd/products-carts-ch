@@ -21,7 +21,6 @@
                 const productId = btn.getAttribute('data-productid')
 
                 try {
-                    // 3. Realiza la petición POST a tu API
                     const response = await fetch(`/api/carts/${cartId}/product/${productId}`,
                         {
                             method: 'POST',

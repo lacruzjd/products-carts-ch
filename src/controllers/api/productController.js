@@ -63,7 +63,7 @@ export default class ProductController {
         try {
             const { pid } = req.params
 
-            const product = await this.productService.getProductById(pid).lean()
+            const product = await this.productService.getProductById(pid)
             return res.status(200).json(product)
         } catch (error) {
             // El servicio lanza un error si no lo encuentra, así que enviamos 404

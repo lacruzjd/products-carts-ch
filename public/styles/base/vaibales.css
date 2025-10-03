@@ -30,6 +30,7 @@ html {
     --espacio-m: var(--espacio-base);
     --espacio-l: calc(var(--espacio-base)* 1.618);
     --espacio-xl: calc(var(--espacio-l)* 1.618);
+    --espacio-xxl: calc(var(--espacio-l)* 2.618);
 
     /* sombras  */
     --sombra-ppal: 0 6px 7px rgba(0, 0, 0, 0.08);

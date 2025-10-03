@@ -1,38 +1,35 @@
 <header>
     <h1>{{title}}</h1>
     <nav>
-        <a href="/">Tienda</a>
+        <a href="/">Inicio</a>
     </nav>
 </header>
 <main>
-    <section id="cart">
-        {{#if cart.products}}
-        {{#each cart.products}}
-        <article class="product">
-            {{#if product.thumbnails}}
-            {{#each product.thumbnails}}
-            <img src={{this}}>
-            {{/each}}
-            {{else}}
-            <img src='/products/img/noimage.png' alt='No hay imagen'>
-            {{/if}}
-            <P>{{product.title}}</P>
-            <P>${{product.price}}</P>
-            <label for="cantidad">Cantidad a comprar:
-                <input type="number" id="cantidad" value="{{quantity}}" min="1"
-                    onchange="actualizarCantidad(this.value, '{{../cart._id}}', '{{product._id}}')">
-            </label>
-            <button data-productId="{{product._id}}" data-cartId="{{../cart._id}}"
-                class="delete-product-cart">Eliminar</button>
-        </article>
+<section class="products-list">
+    {{#if cart.products}}
+    {{#each cart.products}}
+    <article class="product">
+        {{#if product.thumbnails}}
+        {{#each product.thumbnails}}
+        <img src={{this}}>
         {{/each}}
-        <section>
-            <button data-cartId="{{cart._id}}" id="vaciar-carrito">Vaciar Carrito</button>
-        </section>
         {{else}}
-        <h2>El carrito está vacío</h2>
+        <img src='/products/img/noimage.png' alt='No hay imagen'>
         {{/if}}
-    </section>
+        <P>{{product.title}}</P>
+        <P>${{product.price}}</P>
+        <P>{{product.description}}</P>
+        <label for="cantidad">Cantidad a comprar: </label>
+        <input type="number" id="cantidad" value="{{quantity}}" min="1" onchange="actualizarCantidad(this.value, '{{../cart._id}}', '{{product._id}}')">
+        <button data-productId="{{product._id}}" data-cartId="{{../cart._id}}"
+            class="delete-product-cart">Eliminar</button>
+    </article>
+    {{/each}}
+    <button data-cartId="{{cart._id}}" id="vaciar-carrito">Vaciar Carrito</button>
+    {{else}}
+    <p>El carrito está vacío</p>
+    {{/if}}
+</section>
 </main>
 {{> footer}}
 
@@ -42,7 +39,6 @@
         btn.onclick = async (e) => {
             const productId = btn.getAttribute('data-productId')
             const cartId = btn.getAttribute('data-cartId')
-
             await fetch('/carts', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -50,22 +46,18 @@
             })
 
             btn.parentElement.remove()
+            
         }
     })
 
     const buttonDeletProducts = document.querySelector('#vaciar-carrito')
     buttonDeletProducts.onclick = async () => {
         const cartId = buttonDeletProducts.getAttribute('data-cartId')
-        console.log('eliminar', cartId)
         await fetch(`/carts/${cartId}`, {
             method: 'DELETE'
-        })
-
-        buttonDeletProducts.disabled = true
-
-        const productosToDelete = document.querySelectorAll('.product') 
-        productosToDelete.forEach(p => {
-            p.remove()
-        })
+        })            
+        
+        const productNodes =  buttonDeletProducts.parentElement.querySelectorAll('article')
+        productNodes.forEach(p => p.remove())
     }
 </script>

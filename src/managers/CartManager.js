@@ -32,7 +32,6 @@ export default class CartManager {
     }
 
     async updateCart(cid, newProducts) {
-        console.log(newProducts)
         try {
             return await this.model.findByIdAndUpdate(cid, newProducts)
         } catch (error) {

@@ -23,7 +23,6 @@ export default class ProductManager {
     }
 
     async getProductById(pid) {
-        console.log('manager', pid)
         try {
             const productById = await this.model.findById(pid).lean()
             return productById

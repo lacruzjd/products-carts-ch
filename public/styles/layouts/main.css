@@ -15,7 +15,7 @@ main>section {
 @media (max-width: 500px) {
   body {
   margin: 0;
-  padding-top: var(--espacio-xl);
-  padding-bottom: var(--espacio-xl);
+  padding-top: var(--espacio-xxl);
+  padding-bottom: var(--espacio-xxl);
 }
 }
