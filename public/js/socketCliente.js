@@ -36,7 +36,6 @@ socket.on('productsList', productsList => {
     productListRender.className = 'products-list'
     productListRender.innerHTML = ''
 
-    console.log(productsList)
     productsList.forEach(product => {
         const productoArt = document.createElement('article')
         productoArt.className = 'product'
@@ -61,7 +60,7 @@ socket.on('productsList', productsList => {
 productListRender.addEventListener('click', (e) => {
     if (e.target && e.target.id === 'delete-product-btn') {
         const productId = e.target.getAttribute('data-id')
-        const title = document.querySelector('article').querySelector('h3').textContent
+        const title = e.target.parentElement.querySelector('h3').textContent
         if (productId) {
             try {
 

@@ -35,6 +35,14 @@ export default class ProductManager {
             throw new Error(`Ocurrio un error al obtener lista de productos ${error.message}`)
         }
     }
+    
+    async getAllProducts() {
+        try {
+            return await this.model.find() 
+        } catch (error) {
+            throw new Error(`Ocurrio un error al obtener lista de productos ${error.message}`)
+        }
+    }
 
     async getProductById(pid) {
         try {

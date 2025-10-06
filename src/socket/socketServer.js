@@ -1,11 +1,11 @@
-import path from 'path'
+// import path from 'path'
 import { config } from "../config/config.js"
 import ProductModel from "../models/productModel.js"
 import ProductManager from "../managers/ProductManager.js"
 import ProductService from "../services/ProductService.js"
 import StorageService from "../services/StorageService.js"
 
-const ruta = path.join(config.dataBase.dbJson, 'products.json')
+// const ruta = path.join(config.dataBase.dbJson, 'products.json')
 
 const productManager = new ProductManager(ProductModel)
 const storageImagenes = new StorageService(config.paths.products.imageStorage, config.paths.products.imageUrl)
@@ -16,14 +16,14 @@ export default function socketServer(io) {
     io.on('connection', async socket => {
         console.log(`socket id: ${socket.id} conectado`)
 
-        socket.emit('productsList', await productService.getProducts())
+        socket.emit('productsList', await productService.getAllProducts())
 
         socket.on('newProduct', async (datos, callback) => {
             try {
 
                 await productService.createProduct(datos)
 
-                socket.emit('productsList', await productService.getProducts())
+                socket.emit('productsList', await productService.getAllProducts())
                 callback({ status: 'ok', message: 'Producto agregado correctamente' })
 
             } catch (error) {
@@ -35,7 +35,7 @@ export default function socketServer(io) {
             try {
                 await productService.deleteProduct(id)
 
-                socket.emit('productsList', await productService.getProducts());
+                socket.emit('productsList', await productService.getAllProducts());
 
             } catch (error) {
                 socket.emit('error', { message: `${error.message}` });

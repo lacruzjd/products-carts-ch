@@ -41,7 +41,7 @@ export default class ProductController {
 
     async getProducts(req, res) {
         try { 
-            const { page, limit, category, order_price } = req.query
+            const { page, limit = 10, category, order_price } = req.query
 
             const products = await this.productService.getProducts(page, limit, category, order_price)
 

@@ -20,7 +20,7 @@ export default class ProductService {
             newProduct.thumbnails = urlImagenes
         }
 
-        const productSaved = await this.getAllProducts()
+        const productSaved = await this.productManager.getAllProducts()
 
         if (productSaved.some(p => p.code === newProduct.code)) {
             this.storageServiceFotos.deleteImages(newProduct.thumbnails)
@@ -44,6 +44,12 @@ export default class ProductService {
 
         if (!productList) throw new Error('No hay productos en la lista')
 
+        return productList
+    }
+
+    async getAllProducts() {
+        const productList = await this.productManager.getAllProducts()
+        if (!productList) throw new Error('No hay productos en la lista')
         return productList
     }
 
