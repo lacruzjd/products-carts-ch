@@ -44,7 +44,7 @@ export default class CartService {
 
         if (product.stock === 0) throw new Error('No hay stock del producto')
 
-        let productInCart = cartProducts.products.find(p => p.product.equals(product._id))
+        let productInCart = cartProducts.products.find(p => p.product._id.equals(product._id))
 
         if (cartProducts.products.length === 0 && !productInCart) {
             cartProducts.products.push({ product: product._id, quantity: 1 })
@@ -65,13 +65,14 @@ export default class CartService {
 
         const cartProducts = await this.getCartById(cid)
         const productSaved = await this.productManager.getProductById(pid)
-        const product = cartProducts.products.find(p => p.product.equals(productSaved._id.toString()))
+        
+        const product = cartProducts.products.find(p => p.product._id.equals(productSaved._id.toString()))
 
         if (!product) {
             throw new Error(`Producto no encontrado en el carrito${error.message}`)
         }
 
-        const updatedProducts = cartProducts.products.filter(p => p.product.toString() !== productSaved._id.toString())
+        const updatedProducts = cartProducts.products.filter(p => p.product._id.toString() !== productSaved._id.toString())
         await this.cartManager.updateCart(cid, { products: updatedProducts })
 
         productSaved.stock = productSaved.stock + product.quantity
@@ -85,7 +86,7 @@ export default class CartService {
         if (!cart) throw new Error('El carrito esta vacio')
 
         for (const product of cart.products) {
-            let productSaved = await this.productManager.getProductById(product.product)
+            let productSaved = await this.productManager.getProductById(product.product._id)
             productSaved.stock = productSaved.stock + product.quantity
             await this.productManager.updateProduct(productSaved._id, { stock: productSaved.stock })
         }
@@ -108,7 +109,7 @@ export default class CartService {
             throw new Error('Producto no encontrado.')
         }
 
-        const productInCart = cartProducts.products.find(p => p.product.equals(product._id))
+        const productInCart = cartProducts.products.find(p => p.product._id.equals(product._id))
         const oldQuantity = productInCart ? productInCart.quantity : 0;
 
         const quantityDifference = newQuantity - oldQuantity;

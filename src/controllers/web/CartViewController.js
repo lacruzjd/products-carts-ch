@@ -1,5 +1,3 @@
-import CartModel from "../../models/cartModel.js"
-
 export default class CartViewController {
     constructor(service) {
         this.service = service
@@ -14,7 +12,7 @@ export default class CartViewController {
     async getCart(req, res) {
         try {
             const { cid } = req.params
-            const cart = await CartModel.findById(cid).populate("products.product").lean()
+            const cart = await this.service.getCartById(cid)
 
             res.render('cart', {
                 title: 'Carrito de compras',
@@ -24,6 +22,8 @@ export default class CartViewController {
             throw new Error(`Ocurio un error al obtener el carrito: ${error.message}`)
         }
     }
+
+ 
 
     async deletProduct(req, res) {
         try {
@@ -52,6 +52,14 @@ export default class CartViewController {
             throw new Error(`Ocurio un error al eliminar los productos: ${error.message}`)
         }
     }
-
-
+    
+    async ubdateQtyProduct(req, res) {
+        try {
+            const {cid, pid} = req.params
+            const {quantity} = req.body
+            await this.service.updateQtyProductCart(cid, pid, quantity)
+        } catch (error) {
+            throw new Error(`Ocurrio un error al actualizar la cantidad: ${error.message}`)
+        }
+    }
 }

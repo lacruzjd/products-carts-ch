@@ -24,7 +24,7 @@ export default class CartManager {
 
     async getCartById(cid) {
         try {
-            const productById = await this.model.findById(cid)
+            const productById = await this.model.findById(cid).populate("products.product").lean()
             return productById
         } catch (error) {
             throw new Error(`No se pudo obtener el carrito: ${error.message}`)

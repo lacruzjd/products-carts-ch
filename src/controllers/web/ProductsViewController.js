@@ -1,5 +1,3 @@
-import ProductModel from "../../models/productModel.js"
-
 export default class ProductsViewController {
 
     constructor(productservice, cartService) {
@@ -9,24 +7,11 @@ export default class ProductsViewController {
 
     async getProducts(req, res) {
         try {
-            const { page = 1, limit = 10, category, order_price } = req.query
+            const { page, limit, category, order_price } = req.query
 
-            const filtro = {
-            }
-
-            if (category) filtro.category = category
-
-            const options = {
-                page: parseInt(page),
-                limit: parseInt(limit),
-                sort: { price: order_price === 'desc' ? -1 : 1 },
-                lean: true,
-                leanWithId: true
-            }
-
-            let result = await ProductModel.paginate(filtro, options)
+            let result = await this.productservice.getProducts(page, limit, category, order_price)
             const cartId = await this.cartService.createCart()
-            const categorias = await ProductModel.distinct('category')
+            const categorias = await this.productservice.getCategoriesProducts('category')
 
             res.render('index', {
                 title: 'Products & Carts',

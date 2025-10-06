@@ -39,8 +39,8 @@ export default class ProductService {
         return await this.productManager.addProduct(productToSave)
     }
 
-    async getAllProducts() {
-        const productList = await this.productManager.getProducts()
+    async getProducts(page, limit, category, order_price) {
+        const productList = await this.productManager.getProducts(page, limit, category, order_price)
 
         if (!productList) throw new Error('No hay productos en la lista')
 
@@ -80,5 +80,9 @@ export default class ProductService {
         } else {
             throw new Error('No se encontro el producto')
         }
+    }
+
+    async getCategoriesProducts() {
+        return this.productManager.getProductAtribute('category')
     }
 }

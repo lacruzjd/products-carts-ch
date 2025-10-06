@@ -22,7 +22,7 @@ cartViewRoutes.get('/', cartViewController.cart.bind(cartViewController))
 cartViewRoutes.get('/:cid', cartViewController.getCart.bind(cartViewController))
 cartViewRoutes.post('/', cartViewController.deletProduct.bind(cartViewController))
 cartViewRoutes.delete('/:cid', cartViewController.deleteAllProducts.bind(cartViewController))
-
+cartViewRoutes.put('/:cid/product/:pid', cartViewController.ubdateQtyProduct.bind(cartViewController))
 
 export default cartViewRoutes
 

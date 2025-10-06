@@ -36,6 +36,7 @@ socket.on('productsList', productsList => {
     productListRender.className = 'products-list'
     productListRender.innerHTML = ''
 
+    console.log(productsList)
     productsList.forEach(product => {
         const productoArt = document.createElement('article')
         productoArt.className = 'product'

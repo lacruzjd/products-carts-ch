@@ -5,7 +5,7 @@
     </nav>
 </header>
 <main>
-<section class="products-list">
+<section id="cart">
     {{#if cart.products}}
     {{#each cart.products}}
     <article class="product">
@@ -32,32 +32,3 @@
 </section>
 </main>
 {{> footer}}
-
-<script>
-    const button = document.querySelectorAll('.delete-product-cart')
-    button.forEach(btn => {
-        btn.onclick = async (e) => {
-            const productId = btn.getAttribute('data-productId')
-            const cartId = btn.getAttribute('data-cartId')
-            await fetch('/carts', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ cid: cartId, pid: productId })
-            })
-
-            btn.parentElement.remove()
-            
-        }
-    })
-
-    const buttonDeletProducts = document.querySelector('#vaciar-carrito')
-    buttonDeletProducts.onclick = async () => {
-        const cartId = buttonDeletProducts.getAttribute('data-cartId')
-        await fetch(`/carts/${cartId}`, {
-            method: 'DELETE'
-        })            
-        
-        const productNodes =  buttonDeletProducts.parentElement.querySelectorAll('article')
-        productNodes.forEach(p => p.remove())
-    }
-</script>

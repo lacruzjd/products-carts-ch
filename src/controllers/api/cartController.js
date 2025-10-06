@@ -1,5 +1,3 @@
-import cartModel from "../../models/cartModel.js"
-
 export default class CartController {
     constructor(cartService, productService) {
         this.cartService = cartService
@@ -28,7 +26,7 @@ export default class CartController {
     async getCartById(req, res) {
         try {
             const { cid } = req.params
-            const productsInCart = await cartModel.findById(cid).populate("products.product").lean()
+            const productsInCart = await this.cartService.getCartById(cid)
             res.status(200).json(productsInCart.products)
         } catch (error) {
             res.status(404).json({ error: error.message })
@@ -59,7 +57,7 @@ export default class CartController {
         try {
             const { cid } = req.params
             const newProducts = req.body
-            await this.cartService.updateAllProducts(cid, newProducts)
+            await this.cartService.updateProducts(cid, newProducts)
             res.status(201).json({ mensaje: 'Productos actualizados' })
         } catch (error) {
             res.status(404).json({ error: error.message })

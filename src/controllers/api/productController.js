@@ -1,8 +1,6 @@
 import multer from 'multer'
 import path from 'path'
 import { config } from '../../config/config.js'
-import ProductModel from '../../models/productModel.js';
-
 
 // Configuración de Multer
 const storageConfig = multer.diskStorage({
@@ -42,18 +40,12 @@ export default class ProductController {
     }
 
     async getProducts(req, res) {
-        try {
-            const { category, order_price } = req.query
+        try { 
+            const { page, limit, category, order_price } = req.query
 
-            const filtro = {
-                price: { $gt: order_price === 'desc' ? 0 : 1 },
-            }
+            const products = await this.productService.getProducts(page, limit, category, order_price)
 
-            if (category) filtro.category = category
-
-            const filter = await ProductModel.find(filtro).sort({ price: order_price === 'desc' ? -1 : 1 }).lean()
-
-            return res.status(200).json(filter)
+            return res.status(200).json(products)
         } catch (error) {
             return res.status(500).json({ message: `Ocurrió un error al obtener los productos. ${error.message}` })
         }

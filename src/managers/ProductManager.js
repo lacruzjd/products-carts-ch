@@ -14,11 +14,25 @@ export default class ProductManager {
         }
     }
 
-    async getProducts() {
+    async getProducts(page, limit, category, order_price) {
         try {
-            return await this.model.find()
+
+            const filtro = {
+            }
+
+            if (category) filtro.category = category
+
+            const options = {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                sort: { price: order_price === 'desc' ? -1 : 1 },
+                lean: true,
+                leanWithId: true
+            }
+
+            return await this.model.paginate(filtro, options)
         } catch (error) {
-            throw new Error(`Ocurrio un error al obtener lista de productos`)
+            throw new Error(`Ocurrio un error al obtener lista de productos ${error.message}`)
         }
     }
 
@@ -44,6 +58,14 @@ export default class ProductManager {
             return await this.model.findByIdAndDelete(pid)
         } catch (error) {
             throw new Error(`Error al eliminar producto: ${error.message} `)
+        }
+    }
+
+    async getProductAtribute(atribute) {
+        try{
+            return await this.model.distinct(atribute)
+        } catch (error) {
+            throw new Error(`Atributo no encontrado ${error.message}`)
         }
     }
 }

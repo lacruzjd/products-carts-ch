@@ -16,14 +16,14 @@ export default function socketServer(io) {
     io.on('connection', async socket => {
         console.log(`socket id: ${socket.id} conectado`)
 
-        socket.emit('productsList', await productService.getAllProducts())
+        socket.emit('productsList', await productService.getProducts())
 
         socket.on('newProduct', async (datos, callback) => {
             try {
 
                 await productService.createProduct(datos)
 
-                socket.emit('productsList', await productService.getAllProducts())
+                socket.emit('productsList', await productService.getProducts())
                 callback({ status: 'ok', message: 'Producto agregado correctamente' })
 
             } catch (error) {
@@ -35,7 +35,7 @@ export default function socketServer(io) {
             try {
                 await productService.deleteProduct(id)
 
-                socket.emit('productsList', await productService.getAllProducts());
+                socket.emit('productsList', await productService.getProducts());
 
             } catch (error) {
                 socket.emit('error', { message: `${error.message}` });
