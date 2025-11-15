@@ -1,4 +1,15 @@
 <nav>
+    {{#if user}}
+    <h2>Bienvenido {{this.user.first_name}}!</h2>
+    <a href="/users/logout">Cerrar Sesion</a>
+    <a href="/users/current">Perfil</a>
+    {{#if admin}}
     <a href="/realtimeproducts">Editar Productos</a>
+    {{else }}
     <a href="/carts/{{this.cartId}}">Carrito</a>
+    {{/if}}
+    {{else}}
+    <a href="/users/login">Iniciar Sesion - Registrar</a>
+    <a href="/carts/{{this.cartId}}">Carrito</a>
+    {{/if}}
 </nav>

@@ -1,0 +1,45 @@
+{{> headerhome}}
+
+<div class="user-profile">
+  <ul>
+    <li><strong>Nombre:</strong> {{user.first_name}} {{user.last_name}}</li>
+    <li><strong>Email:</strong> {{user.email}}</li>
+    <li><strong>Edad:</strong> {{user.age}}</li>
+    <li><strong>Rol:</strong> {{user.role}}</li>
+  </ul>
+  <div>
+    <a href="/user/editar">Editar Usuario</a>
+  </div>
+  <div>
+    <button id="eliminar-cuenta" data-email="{{user.email}}">Eiminar Cuenta</button>
+  </div>
+</div>
+
+<script>
+  document.getElementById('eliminar-cuenta').addEventListener('click', async () => {
+    console.log('Botón "Eliminar Cuenta" clickeado')
+    const email = document.getElementById('eliminar-cuenta').dataset.email
+    try {
+      const response = await fetch(`http://localhost:8080/api/users/${email}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+      })
+
+
+      if (response.ok) {
+
+        await fetch('/users/logout', { method: 'GET' })
+
+        window.location.href = '/'
+      } else {
+        const errorData = await response.json()
+        console.log(errorData)
+      }
+    } catch (error) {
+      console.error('Error de red o del servidor:', error)
+    }
+  })
+</script>

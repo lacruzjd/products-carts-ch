@@ -11,6 +11,7 @@
 @import url(./layouts/nav.css);
 @import url(./layouts/real-time-products.css);
 @import url(./layouts/carrito.css);
+@import url(./layouts/loginregister.css);
 
 /* elementos */
 @import url(./elementos/botones.css);

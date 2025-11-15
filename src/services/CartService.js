@@ -7,15 +7,9 @@ export default class CartService {
     }
 
     async createCart() {
-        const cart = await this.cartManager.getCarts()
-
-        if (cart.length === 0) {
             const newCart = new Cart()
             const cartSaved = await this.cartManager.createCart(newCart)
             return cartSaved
-        }
-
-        return cart[0]
     }
 
     async getCarts() {

@@ -26,7 +26,7 @@ addProductButtons.forEach(btn => {
                     window.location.href = `/carts/${cartId}`
                 }
             })
-            
+
             if (!response.ok) {
                 const errorData = await response.json()
                 throw new Error(errorData.message || 'Error desconocido al añadir el producto.')
@@ -91,3 +91,6 @@ async function actualizarCantidad(value, cid, pid) {
         body: JSON.stringify({ quantity: value })
     })
 }
+
+
+

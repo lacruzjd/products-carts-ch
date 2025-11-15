@@ -1,16 +1,22 @@
 export default class ProductsViewController {
 
-    constructor(productservice, cartService) {
+    constructor(productservice) {
         this.productservice = productservice
-        this.cartService = cartService
     }
 
     async getProducts(req, res) {
         try {
             const { page, limit, category, order_price } = req.query
 
+            
             let result = await this.productservice.getProducts(page, limit, category, order_price)
-            const cartId = await this.cartService.createCart()
+
+            const user = req.user.user || null
+            let admin = false
+            if(user && user.role === 'admin') {
+                admin = true
+            }
+
             const categorias = await this.productservice.getCategoriesProducts('category')
 
             res.render('index', {
@@ -22,8 +28,9 @@ export default class ProductsViewController {
                 hasNextPage: result.hasNextPage,
                 prevPage: result.prevPage,
                 nextPage: result.nextPage,
-                cartId: cartId._id.toString(),
-                categorias
+                categorias,
+                user,
+                admin 
             })
         } catch (error) {
             throw new Error(`Error al cargar productos: ${error.message}`);
@@ -42,11 +49,9 @@ export default class ProductsViewController {
         try {
             const { pid } = req.params
             const product = await this.productservice.getProductById(pid)
-            const cartId = await this.cartService.getCarts()
             res.render('productdetail', {
                 title: 'Detalle Producto',
                 product,
-                cartId: cartId[0]._id
             })
         } catch (error) {
             throw new Error(`Error al obtener detalles de los  productos: ${error.message}`);

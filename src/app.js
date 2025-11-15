@@ -7,6 +7,11 @@ import http from 'http'
 import { Server } from 'socket.io'
 import socket from './socket/socketServer.js'
 import mongoose from 'mongoose'
+import initializePassport from './config/passportConfig.js'
+import passport from 'passport'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+import mongoStore from 'connect-mongo'
 
 const app = express();
 const server = http.createServer(app)
@@ -32,13 +37,39 @@ const io = new Server(server, {
 
 socket(io)
 
+//session
+app.use(session({
+    secret: process.env.SESSIONSECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: mongoStore.create(
+        {
+            mongoUrl: config.dataBase.mongoDb,
+            ttl: 60 * 60,
+            autoRemove: 'native'
+        }
+    )
+}))
+
+//passport
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use(cookieParser())
+
 // Configuracion mongoose
-mongoose.connect(config.dataBase.mongoDb)
+try {
+    mongoose.connect(config.dataBase.mongoDb)
+    console.log('Conectado a MongoDB')
+} catch (error) {
+    console.log(error)
+}
 
 //Api 
 app.use('/api', apiRoutes)
 
-//views
+//Views
 app.use('/', webRoutes)
 
 export { app, server }

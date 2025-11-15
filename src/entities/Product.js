@@ -1,6 +1,5 @@
 export default class Product {
-
-  constructor({title, description, code, price, stock, category, thumbnails }) {
+  constructor({ title, description, code, price, stock, category, thumbnails }) {
     if (!title || !description || !code || !price || !stock || !category || !thumbnails) {
       throw new Error('Todos los campos son obligatorios')
     }

@@ -1,0 +1,16 @@
+.login-container,
+.form-container,
+.user-profile {
+    margin-top: 100px;
+}
+.login-container form,
+.form-container form{
+    width: 60vh;
+    height: 40vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: space-around;
+    align-items: flex-end;
+}
