@@ -12,6 +12,7 @@
 @import url(./layouts/real-time-products.css);
 @import url(./layouts/carrito.css);
 @import url(./layouts/loginregister.css);
+@import url(./layouts/ticket.css);
 
 /* elementos */
 @import url(./elementos/botones.css);

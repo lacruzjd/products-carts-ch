@@ -1,20 +1,21 @@
 {{> headerhome}}
 {{log this.ticket.products}}
-<div class="user-profile">
+<div class="ticket">
   
-<h3>Ticket de compra {{ticket.numTicket}}</h3>
-<p><strong>Número de ticket:</strong> {{numTicket}}</p>
+<h3>Ticket de compra</h3>
+<p><strong>Número de ticket:</strong> {{ticket.numTicket}}</p>
 
 <p><strong>Cliente:</strong> {{ticket.user.first_name}} {{ticket.user.last_name}}</p>
 <p><strong>Fecha:</strong> {{ticket.datetime}}</p>
+<p><strong>Estatus:</strong> {{ticket.status}}</p>
 <h2>Productos</h2>
 
 <ul>
   {{#each ticket.products}}
     <li>
       <p>{{this.product.title}}</p>
-      <p>${{this.product.price}}</p>
-      <p>Cantidad: ${{this.quantity}}</p>
+      <p>Precio: ${{this.product.price}}</p>
+      <p>Cantidad: {{this.quantity}}</p>
     </li>
   {{/each}}
 </ul>

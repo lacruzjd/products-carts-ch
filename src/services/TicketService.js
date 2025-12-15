@@ -50,7 +50,7 @@ export default class TicketService {
             return total + product.product.price * product.quantity
         }, 0)
 
-        const status = 'Pagado (venta Simulada)'
+        const status = 'Pagado (pago simulado)'
         const ticket = await this.ticketDao.save({ dateTime: new Date(), userId: user._id, status, products, totalPrice })
         const productsInCart = products.map(product => {
             const productDto = new ProductDto(product.product)
