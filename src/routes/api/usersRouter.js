@@ -1,48 +1,19 @@
 import Router from 'express'
-import UserModel from '../../models/userModel.js'
-import UserManager from '../../managers/UserManager.js'
+import UserMongoDao from '../../dao/mongo/UserMongoDAO.js'
 import UserService from '../../services/UserService.js'
 import UserController from '../../controllers/api/UserController.js'
+import {authUpdate, authAdmin} from '../../middlerwares/auth.js'
 
-import passport from 'passport'
-
-const userManager = new UserManager(UserModel)
-const userService = new UserService(userManager)
-const userController = new UserController(userService)
 
 const usersRouter = Router()
+const userService = new UserService(new UserMongoDao())
+const userController = new UserController(userService)
 
-const handleRegister = (req, res, next) => {
-  passport.authenticate('register', (error, user, info) => {
-    if (error) {
-      // Pasar el error al siguiente middleware
-      req.authError = error.message;
-      next();
-    }
-    
-    if (!user) {
-      // Pasar el mensaje de info al siguiente middleware
-      req.authError = info?.message || 'Error de registro';
-      next()
-    }
+usersRouter.get('/', authAdmin, userController.getUsers.bind(userController))
+usersRouter.post('/', userController.register.bind(userController))
+usersRouter.put('/:uid', authUpdate, userController.updateUser.bind(userController))
+usersRouter.delete('/:uid', authUpdate, userController.deleteUser.bind(userController))
+usersRouter.post('/recoverpasswordSendEmail', userController.recoverPasswordEmail.bind(userController))
+usersRouter.post('/recoverpassword', userController.recoverPassword.bind(userController))
 
-    req.user = user 
-    next()
-
-  })(req, res, next);
-};
-
-const jwtAuth = (req, res, next) => {
-    passport.authenticate('jwt', { session: false }, (err, user) => {
-        if (err) return next(err)
-        if (!user) res.status(400).send({ message: 'Debe logearse para acceder a este recurso' })
-        req.user = user
-        next()
-    })(req, res, next)
-}
-
-usersRouter.post('/', handleRegister, userController.addUser.bind(userController))
-usersRouter.delete('/:email', jwtAuth, userController.deleteUser.bind(userController))
-usersRouter.put('/:email', jwtAuth, userController.updateUser.bind(userController))
- 
 export default usersRouter

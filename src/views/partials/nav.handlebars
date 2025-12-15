@@ -6,7 +6,7 @@
     {{#if admin}}
     <a href="/realtimeproducts">Editar Productos</a>
     {{else }}
-    <a href="/carts/{{this.cartId}}">Carrito</a>
+    <a href="/carts/{{this.user.cart}}">Carrito</a>
     {{/if}}
     {{else}}
     <a href="/users/login">Iniciar Sesion - Registrar</a>

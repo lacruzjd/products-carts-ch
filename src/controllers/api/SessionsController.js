@@ -1,7 +1,6 @@
-import User from '../../entities/User.js'
-
 import { isValidPassword } from '../../utils/passwordUtils.js'
-import { createToken } from '../../utils/jwtUtils.js'
+import { createToken, verifyToken } from '../../utils/jwtUtils.js'
+import UserDto from '../../dto/UserDTO.js'
 
 export default class SessionsController {
     constructor(service) {
@@ -11,25 +10,34 @@ export default class SessionsController {
     async login(req, res) {
         try {
             const { email, password } = req.body
-            const user = await this.service.getUserByEmail({ email })
+            const user = await this.service.getUserByEmail(email)
             const validpass = await isValidPassword(password, user.password)
 
             if (!validpass) {
-                throw new Error('Datos inconrrectos')
+                throw new Error('Datos incorrectos')
             }
-
-            let token = createToken(new User(user), '24h')
+            
+            const userDto = new UserDto(user)
+            
+            const anonymousCartId = req.cookies.cartId
+            
+            if(anonymousCartId) {
+                const cartId = verifyToken(anonymousCartId)
+                userDto.cart = cartId.cartId
+                res.clearCookie('cartId')
+            }
+                     
+            let token = createToken({...userDto}, '24h')
 
             res.cookie('authCookie', token, {
                 maxAge: 60 * 60 * 1000,
                 httpOnly: true,
                 sameSite: 'strict'
-                
             })
-                .send({ message: 'Login exitoso' })
+                .json({ message: 'Login exitoso'})
 
         } catch (error) {
-            res.status(404).send({ error: 'Datos incorrectos', message: error.message })
+            res.status(404).json({ error: 'Datos incorrectos', message: error.message })
         }
     }
 
@@ -43,13 +51,17 @@ export default class SessionsController {
                 }
             })
 
-            res.status(200).send({ message: 'Sesión cerrada exitosamente.' })
+            res.status(200).json({ message: 'Sesión cerrada exitosamente.' })
         } catch (error) {
-            res.status(500).send({ message: 'Ocurrió un error al cerrar la sesión.' })
+            res.status(500).json({ message: 'Ocurrió un error al cerrar la sesión.' })
         }
     }
 
     current(req, res) {
-        res.status(200).send({ user: req.user })
+        try {
+            res.status(200).json({ user: req.user })
+        } catch (error) {
+            res.status(500).json({ message: 'Ocurrió un error.', error: error.message})
+        }
     }
 }

@@ -1,0 +1,26 @@
+{{> headerhome}}
+<div class="user-profile">
+  
+<h1>Ticket de compra {{numTicket}}</h1>
+<p><strong>Número de ticket:</strong> {{numTicket}}</p>
+
+<p><strong>Cliente:</strong> {{user.first_name}} {{user.last_name}}</p>
+<p><strong>Fecha:</strong> {{ticket.purchase_datetime}}</p>
+<h2>Productos</h2>
+
+<ul>
+  {{#each products}}
+    <li>
+      {{this.title}} — Cantidad: {{this.quantity}}
+    </li>
+  {{/each}}
+</ul>
+
+<p><strong>Total:</strong> {{ticket.amount}}</p>
+
+
+</div>
+
+<script>
+  
+</script>

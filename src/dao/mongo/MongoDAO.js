@@ -1,5 +1,4 @@
-//Clase para gestionar los productos
-export default class Manager {
+export default class MongoDAO {
         constructor(model) {
                 this.model = model
         }
@@ -12,12 +11,16 @@ export default class Manager {
                 return await this.model.find().lean()
         }
 
+        async getById(id) {
+                return await this.model.findById(id).lean()
+        }
+
         async getBy(property) {
                 return await this.model.findOne(property).lean()
         }
-
+ 
         async update(id, data) {
-                return await this.model.findByIdAndUpdate(id, data)
+                return await this.model.findByIdAndUpdate(id, data, { new: true })
         }
 
         async delete(id) {

@@ -6,15 +6,20 @@ import apiRoutes from './routes/api/index.js'
 import http from 'http'
 import { Server } from 'socket.io'
 import socket from './socket/socketServer.js'
-import mongoose from 'mongoose'
 import initializePassport from './config/passportConfig.js'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import mongoStore from 'connect-mongo'
+import mongodbConnect from './config/mongodbConnect.js'
+import cors from 'cors'
 
 const app = express();
 const server = http.createServer(app)
+app.use(cors())
+
+// Conexion a Mongo Atlas
+mongodbConnect('Atlas')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -37,6 +42,8 @@ const io = new Server(server, {
 
 socket(io)
 
+
+
 //session
 app.use(session({
     secret: process.env.SESSIONSECRET,
@@ -44,7 +51,7 @@ app.use(session({
     saveUninitialized: true,
     store: mongoStore.create(
         {
-            mongoUrl: config.dataBase.mongoDb,
+            mongoUrl: config.dataBase.mongoDbAtlas,
             ttl: 60 * 60,
             autoRemove: 'native'
         }
@@ -56,15 +63,10 @@ initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(cookieParser())
+app.use(cookieParser(process.env.COOKIE_SECRET))
 
-// Configuracion mongoose
-try {
-    mongoose.connect(config.dataBase.mongoDb)
-    console.log('Conectado a MongoDB')
-} catch (error) {
-    console.log(error)
-}
+//envar correo 
+app.get('/email', (req, res) => sendMail())
 
 //Api 
 app.use('/api', apiRoutes)

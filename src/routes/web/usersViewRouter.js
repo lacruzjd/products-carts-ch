@@ -1,23 +1,14 @@
 import { Router } from "express"
-import UserModel from '../../models/userModel.js'
-import UserManager from '../../managers/UserManager.js'
+import UserManager from '../../dao/mongo/UserMongoDAO.js'
 import UserService from '../../services/UserService.js'
 import UserController from '../../controllers/api/UserController.js'
-import passport from "passport"
+import { auth, authUpdate } from "../../middlerwares/auth.js"
 
-const userManager = new UserManager(UserModel)
+const userManager = new UserManager()
 const userService = new UserService(userManager)
 const userController = new UserController(userService)
 
 const usersRouter = Router()
-
-const jwtAuth = (req, res, next) => {
-    passport.authenticate('jwt', { session: false }, (err, user) => {
-        if (!user) res.status(400).send({ message: 'Debe logearse para acceder a este recurso' })
-        req.user = user
-        next()
-    })(req, res, next)
-}
 
 usersRouter.get('/login', (req, res) => {
     const { err } = req.query
@@ -30,7 +21,7 @@ usersRouter.get('/login', (req, res) => {
     }
 })
 
-usersRouter.get('/current', jwtAuth, (req, res) => {
+usersRouter.get('/current', auth, (req, res) => {
     res.render('current', {
         title: 'Perfil Usuario',
         ...req.user
@@ -38,6 +29,15 @@ usersRouter.get('/current', jwtAuth, (req, res) => {
 })
 
 usersRouter.get('/register', (req, res) => {
+    const { err } = req.query
+
+    if (err) {
+        res.render('register', { err: err })
+    } else {
+        res.render('register', { title: 'Registro' })
+    }
+})
+usersRouter.get('/login/register', (req, res) => {
     const { err } = req.query
 
     if (err) {
@@ -58,6 +58,29 @@ usersRouter.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
-usersRouter.post('/register', userController.addUser.bind(userController))
+usersRouter.post('/register', userController.register.bind(userController))
+
+usersRouter.get('/recoverpassemail', (req, res) => {
+    try {
+        res.render('recoverpassemail', { title: 'Recuperacion Contraseña', err: req.query.err })
+    } catch (error) {
+        res.render('recoverpassemail', { err: req.query.err })
+    }
+})
+
+usersRouter.get('/recover-password', (req, res) => {
+    try {
+        const { token } = req.query
+        if(!token) throw new Error("Token inválido o expirado")
+        res.render('recover', { title: 'Recuperacion', token: token })
+
+    } catch (error) {
+        res.render('recover-password', { err: err })
+    }
+})
+
+usersRouter.get('/update-user', authUpdate, (req, res) => {
+    res.render('updateUser', { title: 'Actualizar Usuario', user: req.user})
+})
 
 export default usersRouter

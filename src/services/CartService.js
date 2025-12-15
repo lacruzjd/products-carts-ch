@@ -1,19 +1,19 @@
 import Cart from "../entities/Cart.js"
 
 export default class CartService {
-    constructor(cartManager, productManager) {
-        this.cartManager = cartManager
-        this.productManager = productManager
+    constructor(cartDao, productDao) {
+        this.cartDao = cartDao
+        this.productDao = productDao
     }
 
     async createCart() {
             const newCart = new Cart()
-            const cartSaved = await this.cartManager.createCart(newCart)
+            const cartSaved = await this.cartDao.save(newCart)
             return cartSaved
     }
 
     async getCarts() {
-        const carts = await this.cartManager.getCarts()
+        const carts = await this.cartDao.getAll()
 
         if (!carts) throw new Error(`Carrito no encontrado`)
 
@@ -21,12 +21,12 @@ export default class CartService {
     }
 
     async getCartById(cid) {
-        if (!cid) throw new Error('Se requiere el id del carrito')
-
-        const cart = await this.cartManager.getCartById(cid)
-        if (!cart) throw new Error('Carrito no encontrado')
-
-        return cart
+        try {
+            if (!cid) throw new Error('Se requiere el id del carrito')
+            return  await this.cartDao.getCartById(cid)
+        } catch (error) {
+            throw new Error('Carrito no encontrado')
+        }
     }
 
     async addProductToCart(cid, pid) {
@@ -34,7 +34,7 @@ export default class CartService {
 
         const cartProducts = await this.getCartById(cid)
 
-        const product = await this.productManager.getProductById(pid)
+        const product = await this.productDao.getProductById(pid)
 
         if (product.stock === 0) throw new Error('No hay stock del producto')
 
@@ -48,17 +48,17 @@ export default class CartService {
             cartProducts.products.push({ product: product._id, quantity: 1 })
         }
 
-        await this.cartManager.updateCart(cid, { products: cartProducts.products })
+        await this.cartDao.update(cid, { products: cartProducts.products })
 
-        product.stock--
-        await this.productManager.updateProduct(pid, { stock: product.stock })
+        // product.stock--
+        // await this.productDao.update(pid, { stock: product.stock })
     }
 
     async deleteProductCart(cid, pid) {
         if (!pid && pid) throw new Error('Se requiere el id del carrito y el id del producto')
 
         const cartProducts = await this.getCartById(cid)
-        const productSaved = await this.productManager.getProductById(pid)
+        const productSaved = await this.productDao.getProductById(pid)
         
         const product = cartProducts.products.find(p => p.product._id.equals(productSaved._id.toString()))
 
@@ -67,10 +67,10 @@ export default class CartService {
         }
 
         const updatedProducts = cartProducts.products.filter(p => p.product._id.toString() !== productSaved._id.toString())
-        await this.cartManager.updateCart(cid, { products: updatedProducts })
+        await this.cartDao.update(cid, { products: updatedProducts })
 
-        productSaved.stock = productSaved.stock + product.quantity
-        await this.productManager.updateProduct(pid, { stock: productSaved.stock })
+        // productSaved.stock = productSaved.stock + product.quantity
+        // await this.productDao.update(pid, { stock: productSaved.stock })
     }
 
     async updateProducts(cid, newProducts) {
@@ -79,12 +79,12 @@ export default class CartService {
         const cart = await this.getCartById(cid)
         if (!cart) throw new Error('El carrito esta vacio')
 
-        for (const product of cart.products) {
-            let productSaved = await this.productManager.getProductById(product.product._id)
-            productSaved.stock = productSaved.stock + product.quantity
-            await this.productManager.updateProduct(productSaved._id, { stock: productSaved.stock })
-        }
-        await this.cartManager.updateCart(cid, { products: newProducts })
+        // for (const product of cart.products) {
+            // let productSaved = await this.productDao.getProductById(product.product._id)
+            // productSaved.stock = productSaved.stock + product.quantity
+            // await this.productDao.update(productSaved._id, { stock: productSaved.stock })
+        // }
+        await this.cartDao.update(cid, { products: newProducts })
     }
 
     async updateQtyProductCart(cid, pid, quantity) {
@@ -97,7 +97,7 @@ export default class CartService {
         }
 
         const cartProducts = await this.getCartById(cid);
-        const product = await this.productManager.getProductById(pid)
+        const product = await this.productDao.getProductById(pid)
 
         if (!product) {
             throw new Error('Producto no encontrado.')
@@ -111,7 +111,7 @@ export default class CartService {
             throw new Error(`Stock insuficiente. Solo quedan ${product.stock} unidades.`)
         }
 
-        product.stock -= quantityDifference
+        // product.stock -= quantityDifference
 
         if (productInCart) {
             productInCart.quantity = newQuantity
@@ -119,8 +119,8 @@ export default class CartService {
             cartProducts.products.push({ product: product._id, quantity: newQuantity })
         }
 
-        await this.cartManager.updateCart(cid, { products: cartProducts.products })
-        await this.productManager.updateProduct(pid, { stock: product.stock })
+        await this.cartDao.update(cid, { products: cartProducts.products })
+        // await this.productDao.update(pid, { stock: product.stock })
 
         return { message: 'Cantidad actualizada exitosamente.' }
     }
@@ -128,7 +128,18 @@ export default class CartService {
     async deleteAllProducts(cid) {
         if (!cid) throw new Error('Se requiere el id del carrito')
 
-        await this.updateProducts(cid)
-        await this.cartManager.updateCart(cid, { products: [] })
+        // const productsInCart = await this.cartDao.getById(cid)
+
+        // for (const product of productsInCart.products) {
+        //     await this.deleteProductCart(cid, product.product._id)
+        // }
+        
+        await this.cartDao.update(cid, { products: [] })
     }
+
+    async deleteCart(cid) {
+        if (!cid) throw new Error('Se requiere el id del carrito')
+        await this.cartDao.delete(cid)
+    }
+
 }

@@ -66,7 +66,7 @@ export default class ProductService {
     async updateProduct(pid, data) {
         if (!pid & !data) throw new Error('Se requieren el id del producto y los datos a actualizar')
 
-        const updatedProduct = await this.productManager.updateProduct(pid, data)
+        const updatedProduct = await this.productManager.update(pid, data)
 
         if (!updatedProduct) throw new Error('No se encontro el Producto a actualizar')
 

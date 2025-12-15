@@ -1,0 +1,62 @@
+{{> headerhome}}
+<div class="login-container">
+  <form id="restoredpass">
+    <input type="hidden" id="token" name="token" value="{{token}}">
+    <div class="form-group">
+      <label for="password">Contraseña Nueva:</label>
+      <input type="password" id="password" name="password" required placeholder="Tu contraseña">
+    </div>
+
+    <div>
+      <button type="submit">Entrar</button>
+
+    </div>
+  </form>
+
+  {{#if err}}
+  <p class="error">{{err}}</p>
+  {{/if}}
+
+</div>
+
+
+<script>
+  document.getElementById('restoredpass').addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const token = document.getElementById('token').value
+    const password = document.getElementById('password').value
+
+    try {
+      const response = await fetch('http://localhost:8080/api/users/recoverpassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token, password }),
+        credentials: 'include'
+      })
+
+      if (response.ok) {
+
+        const data = await response.json()
+        console.log(data.message);
+
+
+        window.location.href = '/'
+
+      } else {
+        const errorData = await response.json()
+        console.log(errorData)
+
+        window.location.href = `/users/recover-password/?err=${errorData.error}`
+
+
+      }
+
+    } catch (error) {
+      console.error('Error de red o del servidor:', error)
+
+    }
+  })
+</script>

@@ -1,15 +1,11 @@
-// import path from 'path'
 import { config } from "../config/config.js"
-import ProductModel from "../models/productModel.js"
-import ProductManager from "../managers/ProductManager.js"
+import ProductMongoDAO from "../dao/mongo/ProductMongoDAO.js"
 import ProductService from "../services/ProductService.js"
 import StorageService from "../services/StorageService.js"
 
 // const ruta = path.join(config.dataBase.dbJson, 'products.json')
-
-const productManager = new ProductManager(ProductModel)
 const storageImagenes = new StorageService(config.paths.products.imageStorage, config.paths.products.imageUrl)
-const productService = new ProductService(productManager, storageImagenes)
+const productService = new ProductService(new ProductMongoDAO(), storageImagenes)
 
 //socket para manejar productos servidor
 export default function socketServer(io) {

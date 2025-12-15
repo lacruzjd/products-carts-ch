@@ -10,8 +10,8 @@ const __dirname = path.dirname(__filename)
 export const config = {
    PORT: process.env.PORT,
    dataBase: {
-      mongoDb: process.env.MONGO_URI,
-      dbJson: path.join(__dirname, '../dbFile/json'),
+      mongoDbAtlas: process.env.MONGO_URI,
+      dbJson: path.join(__dirname, '../dataBase/fileDB/json/'),
    },
    paths: {
       public: path.join(__dirname, '../../public'),
@@ -23,9 +23,8 @@ export const config = {
          pages: path.join(__dirname, '../views/pages')
       },
       products: {
-         imageStorage: path.join(__dirname, '../uploads/products/img/'),
+         imageStorage: path.join(__dirname, '../../public/uploads/products/img/'),
          imageUrl: '/products/img/'
       }
    },
-
 }

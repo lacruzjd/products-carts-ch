@@ -3,10 +3,18 @@ const addProductButtons = document.querySelectorAll('.add-product')
 
 addProductButtons.forEach(btn => {
     btn.addEventListener('click', async () => {
-        const cartId = btn.getAttribute('data-cartid')
+    
+        let cartId = btn.getAttribute('data-cartid')
         const productId = btn.getAttribute('data-productid')
 
+
         try {
+            if(!cartId) {
+                const response = await fetch('api/carts', {method: 'POST'})
+                const data = await response.json()
+                cartId = data.id
+            }
+
             const response = await fetch(`api/carts/${cartId}/product/${productId}`,
                 {
                     method: 'POST',
@@ -68,20 +76,6 @@ if (button) {
 
         }
     })
-}
-
-const buttonDeletProducts = document.querySelector('#vaciar-carrito')
-if (buttonDeletProducts) {
-    buttonDeletProducts.onclick = async () => {
-        const cartId = buttonDeletProducts.getAttribute('data-cartId')
-        await fetch(`/carts/${cartId}`, {
-            method: 'DELETE'
-        })
-
-        const productNodes = buttonDeletProducts.parentElement.querySelectorAll('article')
-        productNodes.forEach(p => p.remove())
-        buttonDeletProducts.remove()
-    }
 }
 
 async function actualizarCantidad(value, cid, pid) {

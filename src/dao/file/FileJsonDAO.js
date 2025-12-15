@@ -1,9 +1,10 @@
 import fs from 'fs/promises'
+import { config } from '../../config/config.js'
 
-export default class PersistenciaArchivoJsonDAO {
+export default class FileJsonDTO {
 
     constructor(path) {
-        this.path = path
+        this.path = `${config.dataBase.dbJson}${path}.json`
     }
 
     async #saveData(data) {
@@ -20,7 +21,7 @@ export default class PersistenciaArchivoJsonDAO {
         return JSON.parse(data)
     }
 
-    async save(data) {
+    async create(data) {
         const object = { id: crypto.randomUUID(), ...data }
         try {
             const file = await this.#getData()

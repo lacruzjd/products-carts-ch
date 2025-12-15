@@ -7,16 +7,14 @@ export default class ProductsViewController {
     async getProducts(req, res) {
         try {
             const { page, limit, category, order_price } = req.query
-
             
             let result = await this.productservice.getProducts(page, limit, category, order_price)
 
-            const user = req.user.user || null
+            const user = req.user || null
             let admin = false
             if(user && user.role === 'admin') {
                 admin = true
             }
-
             const categorias = await this.productservice.getCategoriesProducts('category')
 
             res.render('index', {

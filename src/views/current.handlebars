@@ -2,13 +2,11 @@
 
 <div class="user-profile">
   <ul>
-    <li><strong>Nombre:</strong> {{user.first_name}} {{user.last_name}}</li>
-    <li><strong>Email:</strong> {{user.email}}</li>
-    <li><strong>Edad:</strong> {{user.age}}</li>
-    <li><strong>Rol:</strong> {{user.role}}</li>
+    <li><strong>Nombre Completo:</strong> {{first_name}} {{last_name}}</li>
+    <li><strong>Edad:</strong> {{age}}</li>
   </ul>
   <div>
-    <a href="/user/editar">Editar Usuario</a>
+    <a href="/users/update-user">Editar Usuario</a>
   </div>
   <div>
     <button id="eliminar-cuenta" data-email="{{user.email}}">Eiminar Cuenta</button>

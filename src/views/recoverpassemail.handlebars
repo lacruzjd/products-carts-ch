@@ -1,0 +1,58 @@
+{{> headerhome}}
+<div class="login-container">
+  <form id="restoredpass">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required placeholder="email">
+    </div>
+
+    <div>
+      <button type="submit">Entrar</button>
+
+    </div>
+  </form>
+
+  {{#if err}}
+  <p class="error">{{err}}</p>
+  {{/if}}
+
+</div>
+
+
+<script>
+  document.getElementById('restoredpass').addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const email = document.getElementById('email').value
+
+    try {
+      const response = await fetch('http://localhost:8080/api/users/recoverpasswordSendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await response.json();
+      console.log("status:", response.status);
+      console.log("data:", data);
+      
+            if (response.ok) {
+      
+              const data = await response.json()
+      
+              window.location.href = '/'
+      
+            } else {    
+            window.location.href = `/users/recoverpassemail/?err=${data.message}`
+      
+      
+            }
+      
+    } catch (error) {
+      console.error('Error de red o del servidor:', error)
+
+    }
+  })
+</script>
