@@ -56,7 +56,7 @@ export default class TicketService {
             const productDto = new ProductDto(product.product)
             return { product: productDto, quantity: product.quantity }
         })
-        const ticketData = new Ticket(ticket._id, ticket.datetime, new UserDto(user), status, productsInCart, totalPrice)
+        const ticketData = new Ticket(ticket._id, ticket.dateTime, new UserDto(user), status, productsInCart, totalPrice)
 
         await cartService.deleteCart(cartId)
 

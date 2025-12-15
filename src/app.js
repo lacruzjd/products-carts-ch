@@ -13,8 +13,9 @@ import session from 'express-session'
 import mongoStore from 'connect-mongo'
 import mongodbConnect from './config/mongodbConnect.js'
 import cors from 'cors'
+import { errorHandler } from './middlerwares/errorHandler.js'
 
-const app = express();
+const app = express()
 const server = http.createServer(app)
 app.use(cors())
 
@@ -42,8 +43,6 @@ const io = new Server(server, {
 
 socket(io)
 
-
-
 //session
 app.use(session({
     secret: process.env.SESSIONSECRET,
@@ -65,13 +64,13 @@ app.use(passport.session())
 
 app.use(cookieParser(process.env.COOKIE_SECRET))
 
-//envar correo 
-app.get('/email', (req, res) => sendMail())
-
 //Api 
 app.use('/api', apiRoutes)
 
 //Views
 app.use('/', webRoutes)
+
+app.use(errorHandler)
+
 
 export { app, server }

@@ -8,7 +8,6 @@ const router = Router()
 router.get('/', auth, async (req, res) => {
     const user = req.user
     const ticket = await new TicketService().createTicket(user.cart, user.id)
-    console.log(ticket)
     res.render('ticket', { title: 'Ticket', ticket })
 })
 
