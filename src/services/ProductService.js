@@ -20,7 +20,7 @@ export default class ProductService {
             newProduct.thumbnails = urlImagenes
         }
 
-        const productSaved = await this.productManager.getAllProducts()
+        const productSaved = await this.productManager.getAll()
 
         if (productSaved.some(p => p.code === newProduct.code)) {
             this.storageServiceFotos.deleteImages(newProduct.thumbnails)
@@ -36,7 +36,7 @@ export default class ProductService {
             throw new Error(`Faltan datos ${error.message}`)
         }
 
-        return await this.productManager.addProduct(productToSave)
+        return await this.productManager.save(productToSave)
     }
 
     async getProducts(page, limit, category, order_price) {
@@ -48,7 +48,7 @@ export default class ProductService {
     }
 
     async getAllProducts() {
-        const productList = await this.productManager.getAllProducts()
+        const productList = await this.productManager.getAll()
         if (!productList) throw new Error('No hay productos en la lista')
         return productList
     }
@@ -56,7 +56,7 @@ export default class ProductService {
     async getProductById(pid) {
         if (!pid) throw new Error(`Es necesario pasar el id del producto`)
 
-        const product = await this.productManager.getProductById(pid)
+        const product = await this.productManager.getById(pid)
 
         if (!product) throw new Error(`Producto con id ${pid} no encontrado`)
 
@@ -79,7 +79,7 @@ export default class ProductService {
         const productToDelete = await this.getProductById(pid)
 
         if (productToDelete) {
-            await this.productManager.deleteProduct(pid)
+            await this.productManager.delete(pid)
             if (productToDelete.thumbnails && productToDelete.thumbnails.length > 0) {
                 await this.storageServiceFotos.deleteImages(productToDelete.thumbnails)
             }

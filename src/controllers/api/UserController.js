@@ -95,13 +95,13 @@ export default class UserController {
             if (!email) throw new Error('Se requiere el email del usuario')
             const user = await this.service.getUserByEmail(email); // Validar que el usuario existe
             // Crear un token de recuperación que expira en 1 hora
-            const currentDate = new Date()
-            const token = generarTokenRecuperacion1H(user._id, currentDate)
+            const token = generarTokenRecuperacion1H(user._id)
 
             // Construir el enlace de recuperación
             const recoveryLink = `http://localhost:8080/users/recover-password?token=${token}`;
 
             await this.service.recoverPasswordEmail(email, recoveryLink)
+            console.log(recoveryLink)
             res.status(201).json({ mensaje: 'Se envio email con instrucciones para la recuperación de contraseña' })
         } catch (error) {
             res.status(500).json({ message: error.message })

@@ -9,7 +9,7 @@ import ProductsViewController from '../../controllers/web/productsViewController
 import CartManager from '../../dao/mongo/CartMongoDAO.js'
 import CartService from '../../services/CartService.js'
 
-import { auth, current } from '../../middlerwares/auth.js'
+import { authAdmin, current } from '../../middlerwares/auth.js'
 
 
 const productManager = new ProductManager()
@@ -21,7 +21,7 @@ const productController = new ProductsViewController(productService, cartService
 
 const productsViewRouter = Router()
 productsViewRouter.get('/', current, productController.getProducts.bind(productController))
-productsViewRouter.get('/realtimeproducts', productController.getRealTimeProducts.bind(productController))
+productsViewRouter.get('/realtimeproducts', authAdmin,  productController.getRealTimeProducts.bind(productController))
 productsViewRouter.get('/product/:pid', productController.productDetail.bind(productController))
 
 export default productsViewRouter

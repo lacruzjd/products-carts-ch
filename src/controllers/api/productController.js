@@ -80,7 +80,7 @@ export default class ProductController {
     async deleteProduct(req, res) {
         try {
             const { pid } = req.params
-            await this.productService.deleteProduct(pid);
+            await this.productService.delete(pid);
             return res.status(200).json({ message: 'Producto eliminado exitosamente.' })
         } catch (error) {
             return res.status(404).json({ message: error.message });

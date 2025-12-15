@@ -23,7 +23,7 @@ export const config = {
          pages: path.join(__dirname, '../views/pages')
       },
       products: {
-         imageStorage: path.join(__dirname, '../../public/uploads/products/img/'),
+         imageStorage: path.join(__dirname, '../uploads/products/img/'),
          imageUrl: '/products/img/'
       }
    },

@@ -1,3 +1,6 @@
+import UserMongoDAO from "../../dao/mongo/UserMongoDAO.js"
+import UserService from "../../services/UserService.js"
+
 export default class ProductsViewController {
 
     constructor(productservice) {
@@ -12,8 +15,12 @@ export default class ProductsViewController {
 
             const user = req.user || null
             let admin = false
-            if(user && user.role === 'admin') {
-                admin = true
+
+            if(user) {
+                const userAdmin = await new UserService(new UserMongoDAO).getUserById(user.id)
+                if(userAdmin.role === 'admin') {
+                    admin = true
+                }
             }
             const categorias = await this.productservice.getCategoriesProducts('category')
 

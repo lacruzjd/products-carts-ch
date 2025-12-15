@@ -6,7 +6,6 @@ import ProductMongoDAO from "../dao/mongo/ProductMongoDAO.js"
 import ProductService from "./ProductService.js"
 import TicketMongoDAO from "../dao/mongo/TicketMongoDAO.js"
 import Ticket from '../entities/Ticket.js'
-import TicketDto from "../dto/TicketDto.js"
 import UserDto from "../dto/UserDTO.js"
 import ProductDto from "../dto/ProductDto.js"
 
