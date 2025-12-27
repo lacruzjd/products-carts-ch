@@ -1,4 +1,4 @@
-{{> nav this cartId=user.cart}}
+{{> nav this cartId=cartId}}
 <main id="products">
     {{#if this.products}}
     <section class="filtro">
@@ -25,7 +25,7 @@
 
     <section class="products-list">
         {{#each this.products}}
-        {{> product this cartId=../user.cart}}
+        {{> product this cartId=../cartId}}
         {{/each}}
     </section>
 

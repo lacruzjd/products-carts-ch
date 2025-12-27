@@ -15,11 +15,11 @@ addProductButtons.forEach(btn => {
                 cartId = data.id
             }
 
-            const response = await fetch(`api/carts/${cartId}/product/${productId}`,
+            const response = await fetch(`http://localhost:8080/api/carts/${cartId}/product/${productId}`,
                 {
                     method: 'POST',
                 })
-
+            
 
             Swal.fire({
                 title: '¡Producto Agregado!',
@@ -31,13 +31,14 @@ addProductButtons.forEach(btn => {
             }).then((result) => {
                 if (result.isConfirmed) {
                 } else if (result.isDismissed) {
-                    window.location.href = `/carts/${cartId}`
+                    // window.location.href = `/carts/${cartId}`
                 }
             })
 
             if (!response.ok) {
                 const errorData = await response.json()
-                throw new Error(errorData.message || 'Error desconocido al añadir el producto.')
+                console.log(errorData)
+                throw new Error(errorData.message || 'No hay stock del producto')
             }
 
         } catch (error) {

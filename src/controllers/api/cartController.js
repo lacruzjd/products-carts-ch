@@ -96,10 +96,11 @@ export default class CartController {
             if (!cid) throw new Error('Se requiere el id del carrito')
 
             const userlogin = req.cookies.authCookie
-            const user = verifyToken(userlogin)
 
-            if (cid !== user.cart) throw new Error('El carrito no pertenece al usuario logeado')
-
+            if(userlogin) {
+               const user = verifyToken(userlogin)
+               if (cid !== user.cart) throw new Error('El carrito no pertenece al usuario logeado')
+            }  
 
             await this.cartService.addProductToCart(cid, pid)
             res.status(201).json({ mensaje: 'Producto agreagdo al carrito' })
